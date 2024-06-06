@@ -11,6 +11,8 @@
 		ADDF4D622C11E0C4000C9B1D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D612C11E0C4000C9B1D /* ContentView.swift */; };
 		ADDF4D642C11E0C6000C9B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */; };
 		ADDF4D672C11E0C6000C9B1D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D662C11E0C6000C9B1D /* Preview Assets.xcassets */; };
+		ADDF4D702C11E594000C9B1D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D6F2C11E594000C9B1D /* CustomTextField.swift */; };
+		ADDF4D722C11E652000C9B1D /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D712C11E652000C9B1D /* CustomFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		ADDF4D612C11E0C4000C9B1D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ADDF4D662C11E0C6000C9B1D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		ADDF4D6F2C11E594000C9B1D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		ADDF4D712C11E652000C9B1D /* CustomFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomFont.swift; path = "../../../MY/Courses/Tutorials/SwiftUI Animations with Rive/Resources/Xcode Final/AnimatedApp/Styles/CustomFont.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +55,9 @@
 		ADDF4D5E2C11E0C4000C9B1D /* travelo_threads */ = {
 			isa = PBXGroup;
 			children = (
+				ADDF4D6E2C11E57E000C9B1D /* Styles */,
+				ADDF4D6D2C11E100000C9B1D /* Navigation */,
 				ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */,
-				ADDF4D612C11E0C4000C9B1D /* ContentView.swift */,
 				ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */,
 				ADDF4D652C11E0C6000C9B1D /* Preview Content */,
 			);
@@ -65,6 +70,23 @@
 				ADDF4D662C11E0C6000C9B1D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		ADDF4D6D2C11E100000C9B1D /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				ADDF4D612C11E0C4000C9B1D /* ContentView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		ADDF4D6E2C11E57E000C9B1D /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				ADDF4D6F2C11E594000C9B1D /* CustomTextField.swift */,
+				ADDF4D712C11E652000C9B1D /* CustomFont.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +160,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADDF4D622C11E0C4000C9B1D /* ContentView.swift in Sources */,
+				ADDF4D722C11E652000C9B1D /* CustomFont.swift in Sources */,
 				ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */,
+				ADDF4D702C11E594000C9B1D /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
