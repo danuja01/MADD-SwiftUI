@@ -8,16 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("selectedTab") var selectedTab: Tab = .home
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack() {
+            NavigationView {
+                    switch selectedTab {
+                    case .home:
+                        HomeView()
+                            .frame(maxHeight: .infinity)
+                    case .add:
+                        Text("Add View")
+                    case .save:
+                        Text("Save View")
+                    case .user:
+                        Text("User View")
+                    }
+            }
+            TabBar()
         }
-        .padding()
+//        .ignoresSafeArea(.keyboard)
     }
 }
+
 
 #Preview {
     ContentView()

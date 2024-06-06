@@ -7,22 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD28550F2C120C72002FF1B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28550E2C120C72002FF1B5 /* Extensions.swift */; };
+		AD2855112C120C9B002FF1B5 /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855102C120C9B002FF1B5 /* CustomFont.swift */; };
+		AD2855132C120CB7002FF1B5 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855122C120CB7002FF1B5 /* CustomButton.swift */; };
+		AD28556E2C123415002FF1B5 /* icons.riv in Resources */ = {isa = PBXBuildFile; fileRef = AD28556D2C123415002FF1B5 /* icons.riv */; };
+		AD2855732C1248B4002FF1B5 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD28556F2C1248B4002FF1B5 /* Inter-Regular.ttf */; };
+		AD2855742C1248B4002FF1B5 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD2855702C1248B4002FF1B5 /* Inter-SemiBold.ttf */; };
+		AD2855752C1248B4002FF1B5 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD2855712C1248B4002FF1B5 /* Poppins-Bold.ttf */; };
 		ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */; };
-		ADDF4D622C11E0C4000C9B1D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D612C11E0C4000C9B1D /* ContentView.swift */; };
+		ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D612C11E0C4000C9B1D /* SignIn.swift */; };
 		ADDF4D642C11E0C6000C9B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */; };
 		ADDF4D672C11E0C6000C9B1D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D662C11E0C6000C9B1D /* Preview Assets.xcassets */; };
 		ADDF4D702C11E594000C9B1D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D6F2C11E594000C9B1D /* CustomTextField.swift */; };
-		ADDF4D722C11E652000C9B1D /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D712C11E652000C9B1D /* CustomFont.swift */; };
+		ADDF4D752C11F0A3000C9B1D /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = ADDF4D742C11F0A3000C9B1D /* RiveRuntime */; };
+		ADDF4D7E2C11FFC7000C9B1D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D7D2C11FFC7000C9B1D /* HomeView.swift */; };
+		ADDF4D802C120082000C9B1D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D7F2C120082000C9B1D /* ContentView.swift */; };
+		ADDF4D912C1201E5000C9B1D /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D902C1201E5000C9B1D /* TabBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD28550E2C120C72002FF1B5 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		AD2855102C120C9B002FF1B5 /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
+		AD2855122C120CB7002FF1B5 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		AD28556D2C123415002FF1B5 /* icons.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons.riv; sourceTree = "<group>"; };
+		AD28556F2C1248B4002FF1B5 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		AD2855702C1248B4002FF1B5 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		AD2855712C1248B4002FF1B5 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		ADDF4D5C2C11E0C4000C9B1D /* travelo_threads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travelo_threads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = travelo_threadsApp.swift; sourceTree = "<group>"; };
-		ADDF4D612C11E0C4000C9B1D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		ADDF4D612C11E0C4000C9B1D /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ADDF4D662C11E0C6000C9B1D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ADDF4D6F2C11E594000C9B1D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		ADDF4D712C11E652000C9B1D /* CustomFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomFont.swift; path = "../../../MY/Courses/Tutorials/SwiftUI Animations with Rive/Resources/Xcode Final/AnimatedApp/Styles/CustomFont.swift"; sourceTree = "<group>"; };
+		ADDF4D7D2C11FFC7000C9B1D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		ADDF4D7F2C120082000C9B1D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		ADDF4D902C1201E5000C9B1D /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,12 +49,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADDF4D752C11F0A3000C9B1D /* RiveRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD2855142C120CF4002FF1B5 /* RiveAssets */ = {
+			isa = PBXGroup;
+			children = (
+				AD28556D2C123415002FF1B5 /* icons.riv */,
+			);
+			path = RiveAssets;
+			sourceTree = "<group>";
+		};
+		AD2855722C1248B4002FF1B5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				AD28556F2C1248B4002FF1B5 /* Inter-Regular.ttf */,
+				AD2855702C1248B4002FF1B5 /* Inter-SemiBold.ttf */,
+				AD2855712C1248B4002FF1B5 /* Poppins-Bold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		ADDF4D532C11E0C4000C9B1D = {
 			isa = PBXGroup;
 			children = (
@@ -55,6 +93,9 @@
 		ADDF4D5E2C11E0C4000C9B1D /* travelo_threads */ = {
 			isa = PBXGroup;
 			children = (
+				AD2855722C1248B4002FF1B5 /* Fonts */,
+				AD2855142C120CF4002FF1B5 /* RiveAssets */,
+				ADDF4D7C2C11FF2D000C9B1D /* Views */,
 				ADDF4D6E2C11E57E000C9B1D /* Styles */,
 				ADDF4D6D2C11E100000C9B1D /* Navigation */,
 				ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */,
@@ -75,7 +116,8 @@
 		ADDF4D6D2C11E100000C9B1D /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				ADDF4D612C11E0C4000C9B1D /* ContentView.swift */,
+				ADDF4D7F2C120082000C9B1D /* ContentView.swift */,
+				ADDF4D902C1201E5000C9B1D /* TabBar.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -84,9 +126,20 @@
 			isa = PBXGroup;
 			children = (
 				ADDF4D6F2C11E594000C9B1D /* CustomTextField.swift */,
-				ADDF4D712C11E652000C9B1D /* CustomFont.swift */,
+				AD28550E2C120C72002FF1B5 /* Extensions.swift */,
+				AD2855102C120C9B002FF1B5 /* CustomFont.swift */,
+				AD2855122C120CB7002FF1B5 /* CustomButton.swift */,
 			);
 			path = Styles;
+			sourceTree = "<group>";
+		};
+		ADDF4D7C2C11FF2D000C9B1D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ADDF4D612C11E0C4000C9B1D /* SignIn.swift */,
+				ADDF4D7D2C11FFC7000C9B1D /* HomeView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,6 +158,9 @@
 			dependencies = (
 			);
 			name = travelo_threads;
+			packageProductDependencies = (
+				ADDF4D742C11F0A3000C9B1D /* RiveRuntime */,
+			);
 			productName = travelo_threads;
 			productReference = ADDF4D5C2C11E0C4000C9B1D /* travelo_threads.app */;
 			productType = "com.apple.product-type.application";
@@ -133,6 +189,9 @@
 				Base,
 			);
 			mainGroup = ADDF4D532C11E0C4000C9B1D;
+			packageReferences = (
+				ADDF4D732C11F0A3000C9B1D /* XCRemoteSwiftPackageReference "rive-ios" */,
+			);
 			productRefGroup = ADDF4D5D2C11E0C4000C9B1D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -148,7 +207,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADDF4D672C11E0C6000C9B1D /* Preview Assets.xcassets in Resources */,
+				AD2855752C1248B4002FF1B5 /* Poppins-Bold.ttf in Resources */,
 				ADDF4D642C11E0C6000C9B1D /* Assets.xcassets in Resources */,
+				AD2855732C1248B4002FF1B5 /* Inter-Regular.ttf in Resources */,
+				AD2855742C1248B4002FF1B5 /* Inter-SemiBold.ttf in Resources */,
+				AD28556E2C123415002FF1B5 /* icons.riv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,8 +222,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADDF4D622C11E0C4000C9B1D /* ContentView.swift in Sources */,
-				ADDF4D722C11E652000C9B1D /* CustomFont.swift in Sources */,
+				ADDF4D912C1201E5000C9B1D /* TabBar.swift in Sources */,
+				AD28550F2C120C72002FF1B5 /* Extensions.swift in Sources */,
+				AD2855132C120CB7002FF1B5 /* CustomButton.swift in Sources */,
+				ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */,
+				ADDF4D7E2C11FFC7000C9B1D /* HomeView.swift in Sources */,
+				ADDF4D802C120082000C9B1D /* ContentView.swift in Sources */,
+				AD2855112C120C9B002FF1B5 /* CustomFont.swift in Sources */,
 				ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */,
 				ADDF4D702C11E594000C9B1D /* CustomTextField.swift in Sources */,
 			);
@@ -368,6 +436,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ADDF4D732C11F0A3000C9B1D /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rive-app/rive-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		ADDF4D742C11F0A3000C9B1D /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADDF4D732C11F0A3000C9B1D /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = ADDF4D542C11E0C4000C9B1D /* Project object */;
 }
