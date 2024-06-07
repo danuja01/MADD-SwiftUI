@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import CoreLocation
+import MapKit
 
 struct ThreadCard: View {
-    var section = sampleThreads[0]
+    @State private var isLoading = false
+    var section = sampleThreads[1]
+    @State private var locationName: String = "Loading..."
     
     var body: some View {
         VStack {
@@ -16,33 +20,67 @@ struct ThreadCard: View {
                 Circle()
                     .frame(width: 50, height: 50)
                     .overlay(
-                        Image("User")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .scaledToFill()
-                            .clipShape(Circle())
+                        AsyncImage(url: URL(string: section.userImage)) { phase in
+                            if let image = phase.image {
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .scaledToFill()
+                                    .clipShape(Circle())
+                            } else {
+                                AnimatedCirclePlaceholder()
+                            }
+                        }
                     )
-                    .shadow(color: Color("Shadow").opacity(0.2), radius: 10, x: 0, y: 0)
-
+                    .shadow(color: Color("Shadow").opacity(0.1), radius: 10, x: 0, y: 0)
+                
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Thomas Edwin")
+                    Text(section.userName)
                         .font(.system(size: 15))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("Way to Sigiriya")
+                    Text(section.title)
                         .font(.system(size: 24, weight: .bold))
                         .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.5)
+                        .padding(.trailing, 10)
                 }
                 
             }.padding(.bottom, 10)
             
             VStack(alignment: .leading, spacing: 15) {
-                Text("Lats day I wen to Sigiriya with my friends and it was and unbelievable construction on a Rock!!")
+                if let image = section.imageUrl {
+                    Rectangle()
+                        .frame(height: 180)
+                        .overlay(
+                            AsyncImage(url: URL(string: image)) { phase in
+                                if let image = phase.image {
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .scaledToFill()
+                                        .clipShape(Rectangle())
+                                } else {
+                                    AnimatedRectanglePlaceholder()
+                                }
+                            }
+                        )
+                        .cornerRadius(30)
+                        .shadow(color: Color("Shadow").opacity(0.25), radius: 30, x: 0, y: 2)
+                }
+                Text(section.caption)
                     .font(.system(size: 17))
                 HStack(spacing: 8) {
                     Image(systemName: "mappin.circle")
                         .font(.system(size: 20))
-                    Text("Sigiriya, Sri Lanka")
+                    Text(locationName)
                         .font(.system(size: 13, weight: .semibold))
+                        .onAppear {
+                            fetchLocationName(for: section.location)
+                        }
+                        .onTapGesture {
+                            openMaps(for: section.location)
+                        }
                 }
             }
         }
@@ -55,6 +93,38 @@ struct ThreadCard: View {
         .foregroundColor(.white)
         .background(Color("Green1"))
         .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
+    }
+    
+    private func fetchLocationName(for coordinate: CLLocationCoordinate2D) {
+        let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            if let placemarks = placemarks, !placemarks.isEmpty {
+                // Use the first available placemark as the nearest identifiable location
+                if let place = placemarks.first {
+                    if let locality = place.locality, let country = place.country {
+                        self.locationName = "\(locality), \(country)"
+                    } else if let name = place.name {
+                        self.locationName = name
+                    } else {
+                        self.locationName = "Unknown location"
+                    }
+                }
+            } else if let error = error {
+                print("Error finding location: \(error.localizedDescription)")
+                self.locationName = "Error finding location"
+            } else {
+                self.locationName = "No address found"
+            }
+        }
+    }
+
+    private func openMaps(for coordinate: CLLocationCoordinate2D) {
+        let placemark = MKPlacemark(coordinate: coordinate)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = locationName
+        mapItem.openInMaps(launchOptions: nil)
     }
 }
 
