@@ -11,13 +11,14 @@ struct CardButtons: View {
     var body: some View {
         HStack {
             Spacer()
-            HStack {
+            HStack(spacing: 10) {
                 Button(action: {
                     // Action for the heart button
                 }) {
                     Image(systemName: "heart")
                         .foregroundColor(.white)
                         .fontWeight(.medium)
+                        .font(.system(size: 23))
                 }
                 Button(action: {
                     // Action for the bookmark button
@@ -25,6 +26,7 @@ struct CardButtons: View {
                     Image(systemName: "bookmark")
                         .foregroundColor(.white)
                         .fontWeight(.medium)
+                        .font(.system(size: 23))
                 }
             }
             .padding(.top, 15)
@@ -34,5 +36,5 @@ struct CardButtons: View {
 }
 
 #Preview {
-    CardButtons()
+    CardButtons().background(.blue)
 }
