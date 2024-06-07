@@ -11,7 +11,7 @@ import SwiftUI
 struct travelo_threadsApp: App {
     var body: some Scene {
         WindowGroup {
-            SignIn()
+            ContentView()
         }
     }
 }

@@ -21,9 +21,12 @@ struct HomeView: View {
     
     
     var content: some View {
-        VStack(alignment:.leading , spacing: 10) {
-            ThreadCard()
+        VStack(alignment:.leading , spacing: 20) {
+            ForEach(sampleThreads) { section in
+                    ThreadCard(section: section)
+            }
         }.padding()
+            .padding(.bottom, 40)
            
     }
 }

@@ -17,6 +17,10 @@
 		AD28557C2C124EAD002FF1B5 /* ThreadCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28557B2C124EAD002FF1B5 /* ThreadCard.swift */; };
 		AD28557F2C124F34002FF1B5 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28557E2C124F34002FF1B5 /* Thread.swift */; };
 		AD2855822C12D546002FF1B5 /* CardButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855812C12D546002FF1B5 /* CardButtons.swift */; };
+		AD2855852C12D8C8002FF1B5 /* CardImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855842C12D8C8002FF1B5 /* CardImage.swift */; };
+		AD2855882C13314F002FF1B5 /* AnimatedCirclePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855872C13314F002FF1B5 /* AnimatedCirclePlaceholder.swift */; };
+		AD28558B2C1334B0002FF1B5 /* PlaceholderAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28558A2C1334B0002FF1B5 /* PlaceholderAnimation.swift */; };
+		AD28558D2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28558C2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift */; };
 		ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */; };
 		ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D612C11E0C4000C9B1D /* SignIn.swift */; };
 		ADDF4D642C11E0C6000C9B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */; };
@@ -39,6 +43,10 @@
 		AD28557B2C124EAD002FF1B5 /* ThreadCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadCard.swift; sourceTree = "<group>"; };
 		AD28557E2C124F34002FF1B5 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		AD2855812C12D546002FF1B5 /* CardButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardButtons.swift; sourceTree = "<group>"; };
+		AD2855842C12D8C8002FF1B5 /* CardImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImage.swift; sourceTree = "<group>"; };
+		AD2855872C13314F002FF1B5 /* AnimatedCirclePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCirclePlaceholder.swift; sourceTree = "<group>"; };
+		AD28558A2C1334B0002FF1B5 /* PlaceholderAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderAnimation.swift; sourceTree = "<group>"; };
+		AD28558C2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedRectanglePlaceholder.swift; sourceTree = "<group>"; };
 		ADDF4D5C2C11E0C4000C9B1D /* travelo_threads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travelo_threads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = travelo_threadsApp.swift; sourceTree = "<group>"; };
 		ADDF4D612C11E0C4000C9B1D /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
@@ -83,6 +91,7 @@
 		AD28557A2C124E5E002FF1B5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				AD2855862C133131002FF1B5 /* Placeholders */,
 				AD2855802C12D52F002FF1B5 /* ThreadCard */,
 			);
 			path = Components;
@@ -101,8 +110,26 @@
 			children = (
 				AD28557B2C124EAD002FF1B5 /* ThreadCard.swift */,
 				AD2855812C12D546002FF1B5 /* CardButtons.swift */,
+				AD2855842C12D8C8002FF1B5 /* CardImage.swift */,
 			);
 			path = ThreadCard;
+			sourceTree = "<group>";
+		};
+		AD2855862C133131002FF1B5 /* Placeholders */ = {
+			isa = PBXGroup;
+			children = (
+				AD2855872C13314F002FF1B5 /* AnimatedCirclePlaceholder.swift */,
+				AD28558C2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift */,
+			);
+			path = Placeholders;
+			sourceTree = "<group>";
+		};
+		AD2855892C133497002FF1B5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AD28558A2C1334B0002FF1B5 /* PlaceholderAnimation.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		ADDF4D532C11E0C4000C9B1D = {
@@ -124,6 +151,7 @@
 		ADDF4D5E2C11E0C4000C9B1D /* travelo_threads */ = {
 			isa = PBXGroup;
 			children = (
+				AD2855892C133497002FF1B5 /* Extensions */,
 				AD28557D2C124F17002FF1B5 /* Models */,
 				AD28557A2C124E5E002FF1B5 /* Components */,
 				AD2855722C1248B4002FF1B5 /* Fonts */,
@@ -261,6 +289,10 @@
 				AD2855132C120CB7002FF1B5 /* CustomButton.swift in Sources */,
 				ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */,
 				AD2855822C12D546002FF1B5 /* CardButtons.swift in Sources */,
+				AD28558B2C1334B0002FF1B5 /* PlaceholderAnimation.swift in Sources */,
+				AD2855882C13314F002FF1B5 /* AnimatedCirclePlaceholder.swift in Sources */,
+				AD28558D2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift in Sources */,
+				AD2855852C12D8C8002FF1B5 /* CardImage.swift in Sources */,
 				ADDF4D7E2C11FFC7000C9B1D /* HomeView.swift in Sources */,
 				ADDF4D802C120082000C9B1D /* ContentView.swift in Sources */,
 				AD2855112C120C9B002FF1B5 /* CustomFont.swift in Sources */,

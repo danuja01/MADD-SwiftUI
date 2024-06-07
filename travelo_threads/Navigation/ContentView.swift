@@ -26,11 +26,11 @@ struct ContentView: View {
                     }
             }
             TabBar()
+                .padding(.bottom, 20)
         }
-//        .ignoresSafeArea(.keyboard)
+        .ignoresSafeArea()
     }
 }
-
 
 #Preview {
     ContentView()
