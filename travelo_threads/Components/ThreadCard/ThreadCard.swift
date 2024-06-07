@@ -10,9 +10,11 @@ import CoreLocation
 import MapKit
 
 struct ThreadCard: View {
-    @State private var isLoading = false
-    var section = sampleThreads[1]
     @State private var locationName: String = "Loading..."
+    @StateObject private var userImageLoader = ImageLoader()
+    @StateObject private var sectionImageLoader = ImageLoader()
+    
+    var section = sampleThreads[0]
     
     var body: some View {
         VStack {
@@ -20,9 +22,9 @@ struct ThreadCard: View {
                 Circle()
                     .frame(width: 50, height: 50)
                     .overlay(
-                        AsyncImage(url: URL(string: section.userImage)) { phase in
-                            if let image = phase.image {
-                                image
+                        Group {
+                            if let image = userImageLoader.image {
+                                Image(uiImage: image)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .scaledToFill()
@@ -30,10 +32,15 @@ struct ThreadCard: View {
                             } else {
                                 AnimatedCirclePlaceholder()
                             }
+                            
                         }
                     )
                     .shadow(color: Color("Shadow").opacity(0.1), radius: 10, x: 0, y: 0)
-                
+                    .onAppear {
+                        if let url = URL(string: section.userImage) {
+                            userImageLoader.load(url: url)
+                        }
+                    }
                 VStack(alignment: .leading, spacing: 3) {
                     Text(section.userName)
                         .font(.system(size: 15))
@@ -49,13 +56,13 @@ struct ThreadCard: View {
             }.padding(.bottom, 10)
             
             VStack(alignment: .leading, spacing: 15) {
-                if let image = section.imageUrl {
+                if let imageUrl = section.imageUrl, let url = URL(string: imageUrl) {
                     Rectangle()
                         .frame(height: 180)
                         .overlay(
-                            AsyncImage(url: URL(string: image)) { phase in
-                                if let image = phase.image {
-                                    image
+                            Group {
+                                if let image = sectionImageLoader.image {
+                                    Image(uiImage: image)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .scaledToFill()
@@ -67,6 +74,9 @@ struct ThreadCard: View {
                         )
                         .cornerRadius(30)
                         .shadow(color: Color("Shadow").opacity(0.25), radius: 30, x: 0, y: 2)
+                        .onAppear {
+                            sectionImageLoader.load(url: url)
+                        }
                 }
                 Text(section.caption)
                     .font(.system(size: 17))
