@@ -28,6 +28,9 @@ struct TabBar: View {
                     .stroke(.linearGradient(colors: [.white.opacity(0.5), .white.opacity(0)], startPoint: .topLeading, endPoint: .bottomTrailing))
             )
             .padding(.horizontal, 24)
+            .background(GeometryReader { geometry in
+                           Color.clear.preference(key: TabBarHeightPreferenceKey.self, value: geometry.size.height)
+                       })
         }
     }
     
@@ -58,6 +61,13 @@ struct TabBar: View {
                     )
             }
         }
+    }
+}
+
+struct TabBarHeightPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }
 
