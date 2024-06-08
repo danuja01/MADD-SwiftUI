@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import CoreLocation
-import MapKit
 
 struct ExpandedThreadView: View {
     @StateObject private var userImageLoader = ImageLoader()
@@ -25,15 +23,16 @@ struct ExpandedThreadView: View {
             })
             
             ScrollView {
-                VStack {
+                VStack(spacing: 20) {
                     SharedThreadContent(
                         userImageLoader: userImageLoader,
                         sectionImageLoader: sectionImageLoader,
                         locationFetcher: locationFetcher,
                         section: section,
-                        showCaption: false,
+                        showCaption: true,
                         buttonColor: Color("Button")
                     )
+                    content
                 }
                 .padding(.horizontal, 25)
                 .padding(.vertical, 10)
@@ -48,14 +47,18 @@ struct ExpandedThreadView: View {
         .statusBar(hidden: true)
     }
     
-    private func openMaps(for coordinate: CLLocationCoordinate2D) {
-        let placemark = MKPlacemark(coordinate: coordinate)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = locationFetcher.locationName
-        mapItem.openInMaps(launchOptions: nil)
+    var content: some View {
+        VStack(spacing: 20){
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Color("Green2"))
+        CommentTextArea()
+            
+        }
     }
+    
 }
 
 #Preview {
-    ExpandedThreadView(section: sampleThreads[0])
+    ExpandedThreadView(section: sampleThreads[2])
 }

@@ -1,8 +1,8 @@
 //
 //  CustomTextField.swift
-//  travelo_threads
+//  AnimatedApp
 //
-//  Created by Danuja Jayasuriya on 2024-06-06.
+//  Created by Meng To on 2022-04-11.
 //
 
 import SwiftUI

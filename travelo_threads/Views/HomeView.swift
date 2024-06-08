@@ -34,7 +34,7 @@ struct HomeView: View {
                 }) {
                     ThreadCard(section: section)
                 }
-                .buttonStyle(PlainButtonStyle()) // Prevent default button styling
+                .buttonStyle(PlainButtonStyle())
             }
         }
         .padding()
