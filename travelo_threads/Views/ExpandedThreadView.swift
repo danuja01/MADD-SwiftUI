@@ -10,26 +10,37 @@ import CoreLocation
 import MapKit
 
 struct ExpandedThreadView: View {
-    @Binding var isExpanded: Bool
     @StateObject private var userImageLoader = ImageLoader()
     @StateObject private var sectionImageLoader = ImageLoader()
     @StateObject private var locationFetcher = LocationFetcher()
     
     var section: Thread
-    var animation: Namespace.ID
+
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        ZStack {
-            Color("Background")
-                .ignoresSafeArea()
-            
+        VStack {
+            HStack {
+                Spacer()
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Image(systemName: "xmark")
+                        .foregroundColor(Color.white.opacity(0.8))
+                }
+                .frame(width: 30, height: 30)
+                .background(Circle().foregroundColor(Color.black.opacity(0.6)))
+                .padding(.trailing, 20)
+                .padding(.top, -20)
+            }
+            .background(Color("Background"))
+
             ScrollView {
                 VStack {
                     HStack(spacing: 10) {
                         if let image = userImageLoader.image {
                             Circle()
                                 .frame(width: 50, height: 50)
-                                .matchedGeometryEffect(id: "image-\(section.id)", in: animation)
                                 .overlay(
                                     Image(uiImage: image)
                                         .resizable()
@@ -54,7 +65,6 @@ struct ExpandedThreadView: View {
                             Text(section.userName)
                                 .font(.system(size: 15))
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .matchedGeometryEffect(id: "userName-\(section.id)", in: animation)
                             Text(section.title)
                                 .font(.system(size: 24, weight: .bold))
                                 .multilineTextAlignment(.leading)
@@ -62,7 +72,6 @@ struct ExpandedThreadView: View {
                                 .minimumScaleFactor(0.5)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.trailing, 10)
-                                .matchedGeometryEffect(id: "title-\(section.id)", in: animation)
                         }
                     }
                     .padding(.bottom, 10)
@@ -71,7 +80,6 @@ struct ExpandedThreadView: View {
                         if let imageUrl = section.imageUrl, let url = URL(string: imageUrl) {
                             Rectangle()
                                 .frame(height: 180)
-                                .matchedGeometryEffect(id: "imageURL-\(section.id)", in: animation)
                                 .overlay(
                                     Group {
                                         if let image = sectionImageLoader.image {
@@ -93,12 +101,11 @@ struct ExpandedThreadView: View {
                         }
                         Text(section.caption)
                             .font(.system(size: 17))
-                            .matchedGeometryEffect(id: "caption-\(section.id)", in: animation)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         HStack(spacing: 8) {
                             Image(systemName: "mappin.circle")
                                 .font(.system(size: 20))
-                            Text("Sigiriya Rock")
+                            Text(locationFetcher.locationName)
                                 .font(.system(size: 13, weight: .semibold))
                                 .onAppear {
                                     locationFetcher.fetchLocation(for: section.location)
@@ -106,7 +113,6 @@ struct ExpandedThreadView: View {
                                 .onTapGesture {
                                     openMaps(for: section.location)
                                 }
-                                .matchedGeometryEffect(id: "location-\(section.id)", in: animation)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
@@ -114,33 +120,11 @@ struct ExpandedThreadView: View {
                 .padding(.horizontal, 25)
                 .padding(.vertical, 10)
                 .overlay(
-                    CardButtons(color: .black).padding(.top, 10)
-                        .matchedGeometryEffect(id: "buttons-\(section.id)", in: animation),
+                    CardButtons(color: Color("Button")).padding(.top, 10),
                     alignment: .topTrailing
                 )
                 .cornerRadius(30)
-                .matchedGeometryEffect(id: "background-\(section.id)", in: animation)
             }
-
-            VStack{
-                HStack{
-                    Spacer()
-                    Button(action: {
-                        withAnimation(.spring()) {
-                            isExpanded = false
-                        }
-                    }) {
-                        Image(systemName: "xmark")
-                            .foregroundColor(Color.white.opacity(0.8))
-                    }
-                    .frame(width: 30, height: 30)
-                    .background(Circle().foregroundColor(Color.black.opacity(0.6)))
-                    .padding(.trailing, 25)
-                    .padding(.top, 50)
-                }
-                Spacer()
-            }
-            .ignoresSafeArea()
         }
         .background(Color("Background"))
         .statusBar(hidden: true)
@@ -155,5 +139,5 @@ struct ExpandedThreadView: View {
 }
 
 #Preview {
-    ExpandedThreadView(isExpanded: .constant(true), section: sampleThreads[0], animation: Namespace().wrappedValue)
+    ExpandedThreadView(section: sampleThreads[0])
 }

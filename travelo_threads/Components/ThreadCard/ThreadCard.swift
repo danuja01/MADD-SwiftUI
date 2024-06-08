@@ -4,7 +4,6 @@
 //
 //  Created by Danuja Jayasuriya on 2024-06-07.
 //
-
 import SwiftUI
 import CoreLocation
 import MapKit
@@ -15,8 +14,6 @@ struct ThreadCard: View {
     @StateObject private var locationFetcher = LocationFetcher()
     
     var section: Thread
-    var animation: Namespace.ID
-    @Binding var isExpanded: Bool
 
     var body: some View {
         VStack {
@@ -24,7 +21,6 @@ struct ThreadCard: View {
                 if let image = userImageLoader.image {
                     Circle()
                         .frame(width: 50, height: 50)
-                        .matchedGeometryEffect(id: "image-\(section.id)", in: animation)
                         .overlay(
                             Image(uiImage: image)
                                 .resizable()
@@ -47,13 +43,14 @@ struct ThreadCard: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(section.userName)
                         .font(.system(size: 15))
-                        .matchedGeometryEffect(id: "userName-\(section.id)", in: animation)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     Text(section.title)
                         .font(.system(size: 24, weight: .bold))
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
                         .minimumScaleFactor(0.5)
-                        .matchedGeometryEffect(id: "title-\(section.id)", in: animation)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.trailing, 10)
                 }
             }
             .padding(.bottom, 10)
@@ -62,7 +59,6 @@ struct ThreadCard: View {
                 if let imageUrl = section.imageUrl, let url = URL(string: imageUrl) {
                     Rectangle()
                         .frame(height: 180)
-                        .matchedGeometryEffect(id: "imageURL-\(section.id)", in: animation)
                         .overlay(
                             Group {
                                 if let image = sectionImageLoader.image {
@@ -83,13 +79,12 @@ struct ThreadCard: View {
                 }
                 Text(section.caption)
                     .font(.system(size: 17))
-                    .matchedGeometryEffect(id: "caption-\(section.id)", in: animation)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 HStack(spacing: 8) {
                     Image(systemName: "mappin.circle")
                         .font(.system(size: 20))
                     Text(locationFetcher.locationName)
                         .font(.system(size: 13, weight: .semibold))
-                        .matchedGeometryEffect(id: "location-\(section.id)", in: animation)
                         .onAppear {
                             locationFetcher.fetchLocation(for: section.location)
                         }
@@ -102,14 +97,12 @@ struct ThreadCard: View {
         .padding()
         .padding(.vertical, 10)
         .overlay(
-            CardButtons()
-                .matchedGeometryEffect(id: "buttons-\(section.id)", in: animation),
+            CardButtons(),
             alignment: .topTrailing
         )
         .foregroundColor(.white)
         .background(Color("Green1"))
         .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
-        .matchedGeometryEffect(id: "background-\(section.id)", in: animation)
     }
     
     private func openMaps(for coordinate: CLLocationCoordinate2D) {
@@ -121,6 +114,6 @@ struct ThreadCard: View {
 }
 
 #Preview {
-    @Namespace var animation
-    return ThreadCard(section: sampleThreads[0], animation: animation, isExpanded: .constant(false)).padding()
+    ThreadCard(section: sampleThreads[0]).padding()
 }
+
