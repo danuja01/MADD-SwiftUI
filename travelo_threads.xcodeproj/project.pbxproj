@@ -26,7 +26,8 @@
 		AD2855942C1363D4002FF1B5 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855932C1363D4002FF1B5 /* LocationFetcher.swift */; };
 		AD2855962C1364E3002FF1B5 /* CLLocationCoordinate2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855952C1364E3002FF1B5 /* CLLocationCoordinate2D.swift */; };
 		AD2855982C1383C8002FF1B5 /* Training.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855972C1383C8002FF1B5 /* Training.swift */; };
-		AD28559F2C144C03002FF1B5 /* ThreadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28559E2C144C03002FF1B5 /* ThreadHeaderView.swift */; };
+		AD28559F2C144C03002FF1B5 /* SharedThreadContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28559E2C144C03002FF1B5 /* SharedThreadContent.swift */; };
+		AD2855A12C1453F2002FF1B5 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855A02C1453F2002FF1B5 /* CloseButton.swift */; };
 		ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */; };
 		ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D612C11E0C4000C9B1D /* SignIn.swift */; };
 		ADDF4D642C11E0C6000C9B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */; };
@@ -58,7 +59,8 @@
 		AD2855932C1363D4002FF1B5 /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		AD2855952C1364E3002FF1B5 /* CLLocationCoordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2D.swift; sourceTree = "<group>"; };
 		AD2855972C1383C8002FF1B5 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
-		AD28559E2C144C03002FF1B5 /* ThreadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadHeaderView.swift; sourceTree = "<group>"; };
+		AD28559E2C144C03002FF1B5 /* SharedThreadContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedThreadContent.swift; sourceTree = "<group>"; };
+		AD2855A02C1453F2002FF1B5 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		ADDF4D5C2C11E0C4000C9B1D /* travelo_threads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travelo_threads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = travelo_threadsApp.swift; sourceTree = "<group>"; };
 		ADDF4D612C11E0C4000C9B1D /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
@@ -104,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				AD2855862C133131002FF1B5 /* Placeholders */,
-				AD2855802C12D52F002FF1B5 /* ThreadCard */,
+				AD2855802C12D52F002FF1B5 /* Thread */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -117,15 +119,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		AD2855802C12D52F002FF1B5 /* ThreadCard */ = {
+		AD2855802C12D52F002FF1B5 /* Thread */ = {
 			isa = PBXGroup;
 			children = (
 				AD28557B2C124EAD002FF1B5 /* ThreadCard.swift */,
 				AD2855812C12D546002FF1B5 /* CardButtons.swift */,
 				AD2855842C12D8C8002FF1B5 /* CardImage.swift */,
-				AD28559E2C144C03002FF1B5 /* ThreadHeaderView.swift */,
+				AD28559E2C144C03002FF1B5 /* SharedThreadContent.swift */,
+				AD2855A02C1453F2002FF1B5 /* CloseButton.swift */,
 			);
-			path = ThreadCard;
+			path = Thread;
 			sourceTree = "<group>";
 		};
 		AD2855862C133131002FF1B5 /* Placeholders */ = {
@@ -312,7 +315,7 @@
 				ADDF4D912C1201E5000C9B1D /* TabBar.swift in Sources */,
 				AD28550F2C120C72002FF1B5 /* Extensions.swift in Sources */,
 				AD28557F2C124F34002FF1B5 /* Thread.swift in Sources */,
-				AD28559F2C144C03002FF1B5 /* ThreadHeaderView.swift in Sources */,
+				AD28559F2C144C03002FF1B5 /* SharedThreadContent.swift in Sources */,
 				AD28558F2C1357F5002FF1B5 /* ExpandedThreadView.swift in Sources */,
 				AD2855132C120CB7002FF1B5 /* CustomButton.swift in Sources */,
 				ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */,
@@ -320,6 +323,7 @@
 				AD2855982C1383C8002FF1B5 /* Training.swift in Sources */,
 				AD28558B2C1334B0002FF1B5 /* PlaceholderAnimation.swift in Sources */,
 				AD2855882C13314F002FF1B5 /* AnimatedCirclePlaceholder.swift in Sources */,
+				AD2855A12C1453F2002FF1B5 /* CloseButton.swift in Sources */,
 				AD2855942C1363D4002FF1B5 /* LocationFetcher.swift in Sources */,
 				AD28558D2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift in Sources */,
 				AD2855852C12D8C8002FF1B5 /* CardImage.swift in Sources */,

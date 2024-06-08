@@ -1,20 +1,23 @@
 //
-//  ThreadCard.swift
+//  SharedThreadContent.swift
 //  travelo_threads
 //
-//  Created by Danuja Jayasuriya on 2024-06-07.
+//  Created by Danuja Jayasuriya on 2024-06-08.
 //
+
 import SwiftUI
 import CoreLocation
 import MapKit
 
-struct ThreadCard: View {
-    @StateObject private var userImageLoader = ImageLoader()
-    @StateObject private var sectionImageLoader = ImageLoader()
-    @StateObject private var locationFetcher = LocationFetcher()
+struct SharedThreadContent: View {
+    @ObservedObject var userImageLoader: ImageLoader
+    @ObservedObject var sectionImageLoader: ImageLoader
+    @ObservedObject var locationFetcher: LocationFetcher
     
     var section: Thread
-
+    var showCaption: Bool = true
+    var buttonColor: Color = Color.white
+    
     var body: some View {
         VStack {
             HStack(spacing: 10) {
@@ -24,7 +27,8 @@ struct ThreadCard: View {
                         .overlay(
                             Image(uiImage: image)
                                 .resizable()
-                                .aspectRatio(contentMode: .fill)
+                                .aspectRatio(contentMode: .fit)
+                                .scaledToFill()
                                 .clipShape(Circle())
                         )
                         .shadow(color: Color("Shadow").opacity(0.1), radius: 10, x: 0, y: 0)
@@ -64,7 +68,8 @@ struct ThreadCard: View {
                                 if let image = sectionImageLoader.image {
                                     Image(uiImage: image)
                                         .resizable()
-                                        .aspectRatio(contentMode: .fill)
+                                        .aspectRatio(contentMode: .fit)
+                                        .scaledToFill()
                                         .clipShape(Rectangle())
                                 } else {
                                     AnimatedRectanglePlaceholder()
@@ -77,9 +82,13 @@ struct ThreadCard: View {
                             sectionImageLoader.load(url: url)
                         }
                 }
-                Text(section.caption)
-                    .font(.system(size: 17))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                if showCaption {
+                    Text(section.caption)
+                        .font(.system(size: 17))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
                 HStack(spacing: 8) {
                     Image(systemName: "mappin.circle")
                         .font(.system(size: 20))
@@ -91,18 +100,10 @@ struct ThreadCard: View {
                         .onTapGesture {
                             openMaps(for: section.location)
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }
-        .padding()
-        .padding(.vertical, 10)
-        .overlay(
-            CardButtons(),
-            alignment: .topTrailing
-        )
-        .foregroundColor(.white)
-        .background(Color("Green1"))
-        .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
     }
     
     private func openMaps(for coordinate: CLLocationCoordinate2D) {
@@ -114,6 +115,5 @@ struct ThreadCard: View {
 }
 
 #Preview {
-    ThreadCard(section: sampleThreads[0]).padding()
+    SharedThreadContent(userImageLoader: ImageLoader(), sectionImageLoader: ImageLoader(), locationFetcher: LocationFetcher(), section: sampleThreads[0], showCaption: true).padding()
 }
-
