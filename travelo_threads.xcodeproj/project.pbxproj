@@ -43,7 +43,9 @@
 		ADDFE7C62C1479C2003BAC64 /* CommentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7C52C1479C2003BAC64 /* CommentCard.swift */; };
 		ADDFE7C82C147BB5003BAC64 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7C72C147BB5003BAC64 /* Comment.swift */; };
 		ADDFE7CA2C149395003BAC64 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7C92C149395003BAC64 /* UserImage.swift */; };
-		ADDFE7CC2C14BF3D003BAC64 /* AddNewThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7CB2C14BF3D003BAC64 /* AddNewThread.swift */; };
+		ADDFE7D12C14D9E2003BAC64 /* AddNewThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7D02C14D9E2003BAC64 /* AddNewThread.swift */; };
+		ADDFE7D32C14E589003BAC64 /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7D22C14E589003BAC64 /* SearchManager.swift */; };
+		ADDFE7D72C14EDCE003BAC64 /* LocationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7D62C14EDCE003BAC64 /* LocationSearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,7 +85,9 @@
 		ADDFE7C52C1479C2003BAC64 /* CommentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCard.swift; sourceTree = "<group>"; };
 		ADDFE7C72C147BB5003BAC64 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		ADDFE7C92C149395003BAC64 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
-		ADDFE7CB2C14BF3D003BAC64 /* AddNewThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewThread.swift; sourceTree = "<group>"; };
+		ADDFE7D02C14D9E2003BAC64 /* AddNewThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewThread.swift; sourceTree = "<group>"; };
+		ADDFE7D22C14E589003BAC64 /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
+		ADDFE7D62C14EDCE003BAC64 /* LocationSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,7 @@
 		AD28557A2C124E5E002FF1B5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				ADDFE7CD2C14D32B003BAC64 /* AddNewThread */,
 				AD2855862C133131002FF1B5 /* Placeholders */,
 				AD2855802C12D52F002FF1B5 /* Thread */,
 			);
@@ -168,6 +173,7 @@
 				AD2855912C135AC1002FF1B5 /* ImageLoader.swift */,
 				AD2855932C1363D4002FF1B5 /* LocationFetcher.swift */,
 				AD2855A62C14562B002FF1B5 /* OpenMaps.swift */,
+				ADDFE7D22C14E589003BAC64 /* SearchManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -272,9 +278,17 @@
 				ADDF4D612C11E0C4000C9B1D /* SignIn.swift */,
 				ADDF4D7D2C11FFC7000C9B1D /* HomeView.swift */,
 				AD28558E2C1357F4002FF1B5 /* ExpandedThreadView.swift */,
-				ADDFE7CB2C14BF3D003BAC64 /* AddNewThread.swift */,
+				ADDFE7D02C14D9E2003BAC64 /* AddNewThread.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		ADDFE7CD2C14D32B003BAC64 /* AddNewThread */ = {
+			isa = PBXGroup;
+			children = (
+				ADDFE7D62C14EDCE003BAC64 /* LocationSearchView.swift */,
+			);
+			path = AddNewThread;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,6 +381,7 @@
 				AD2855A72C14562B002FF1B5 /* OpenMaps.swift in Sources */,
 				AD28558F2C1357F5002FF1B5 /* ExpandedThreadView.swift in Sources */,
 				AD2855AB2C145A7A002FF1B5 /* CustomTextEditor.swift in Sources */,
+				ADDFE7D12C14D9E2003BAC64 /* AddNewThread.swift in Sources */,
 				AD2855132C120CB7002FF1B5 /* CustomButton.swift in Sources */,
 				ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */,
 				AD2855822C12D546002FF1B5 /* CardButtons.swift in Sources */,
@@ -377,7 +392,6 @@
 				AD2855A12C1453F2002FF1B5 /* CloseButton.swift in Sources */,
 				ADDFE7CA2C149395003BAC64 /* UserImage.swift in Sources */,
 				AD2855942C1363D4002FF1B5 /* LocationFetcher.swift in Sources */,
-				ADDFE7CC2C14BF3D003BAC64 /* AddNewThread.swift in Sources */,
 				AD28558D2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift in Sources */,
 				AD2855852C12D8C8002FF1B5 /* CardImage.swift in Sources */,
 				ADDF4D7E2C11FFC7000C9B1D /* HomeView.swift in Sources */,
@@ -386,7 +400,9 @@
 				AD2855112C120C9B002FF1B5 /* CustomFont.swift in Sources */,
 				AD2855922C135AC1002FF1B5 /* ImageLoader.swift in Sources */,
 				AD28557C2C124EAD002FF1B5 /* ThreadCard.swift in Sources */,
+				ADDFE7D72C14EDCE003BAC64 /* LocationSearchView.swift in Sources */,
 				ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */,
+				ADDFE7D32C14E589003BAC64 /* SearchManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,20 +8,30 @@
 import SwiftUI
 
 struct CustomTextField: ViewModifier {
-    var image: Image
+    var image: Image?
+    var backgroundColor: Color = .white
+    var borderColor: Color = Color.black.opacity(0.1)
+    var cornerRadius: CGFloat = 10
+
     func body(content: Content) -> some View {
-        content
-            .padding(15)
-            .padding(.leading, 36)
-            .background(.white)
-            .mask(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(lineWidth: 1).fill(.black.opacity(0.1)))
-            .overlay(image.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 8))
+        ZStack(alignment: .leading) {
+            if let image = image {
+                image
+                    .padding(.leading, 8)
+            }
+            content
+                .padding(15)
+                .padding(.leading, image != nil ? 36 : 15) // Adjust padding if image is present
+                .background(backgroundColor)
+                .mask(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(borderColor, lineWidth: 1))
+        }
     }
 }
 
 extension View {
-    func customTextField(image: Image) -> some View {
-        modifier(CustomTextField(image: image))
+    func customTextField(image: Image? = nil, backgroundColor: Color = .white, borderColor: Color = Color.black.opacity(0.1), cornerRadius: CGFloat = 10) -> some View {
+        modifier(CustomTextField(image: image, backgroundColor: backgroundColor, borderColor: borderColor, cornerRadius: cornerRadius))
     }
 }
+
