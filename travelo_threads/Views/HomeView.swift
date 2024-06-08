@@ -10,12 +10,16 @@ import SwiftUI
 struct HomeView: View {
     @State private var tabBarHeight: CGFloat = 0
     @State private var selectedThread: Thread?
-
+    
     var body: some View {
         ZStack {
             Color("Background").ignoresSafeArea()
             ScrollView {
                 content
+            }
+            .scrollIndicators(.never)
+            .refreshable {
+//                impliment refreshhh!!
             }
             .onPreferenceChange(TabBarHeightPreferenceKey.self) { value in
                 tabBarHeight = value
@@ -25,7 +29,7 @@ struct HomeView: View {
             }
         }
     }
-
+    
     var content: some View {
         VStack(alignment: .leading, spacing: 20) {
             ForEach(sampleThreads) { section in

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ExpandedThreadView: View {
+    @FocusState private var isFocused: Bool
+    @State private var comment: String = ""
     @StateObject private var userImageLoader = ImageLoader()
     @StateObject private var sectionImageLoader = ImageLoader()
     @StateObject private var locationFetcher = LocationFetcher()
@@ -41,10 +43,13 @@ struct ExpandedThreadView: View {
                     alignment: .topTrailing
                 )
                 .cornerRadius(30)
-            }
+            }.scrollIndicators(.never)
         }
         .background(Color("Background"))
         .statusBar(hidden: true)
+        .onTapGesture {
+                 isFocused = false
+        }
     }
     
     var content: some View {
@@ -52,8 +57,13 @@ struct ExpandedThreadView: View {
             Rectangle()
                 .frame(height: 1)
                 .foregroundColor(Color("Green2"))
-        CommentTextArea()
-            
+            CommentTextArea(comment: comment)
+                         .focused($isFocused)
+            VStack(spacing: 10){
+                ForEach(sampleComments) { comment in
+                    CommentCard(section: comment)
+                }
+            }
         }
     }
     

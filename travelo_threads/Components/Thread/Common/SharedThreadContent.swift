@@ -17,32 +17,12 @@ struct SharedThreadContent: View {
     var section: Thread
     var showCaption: Bool = true
     var buttonColor: Color = Color.white
+    var userImageSize: CGFloat = 50
     
     var body: some View {
         VStack {
             HStack(spacing: 10) {
-                if let image = userImageLoader.image {
-                    Circle()
-                        .frame(width: 50, height: 50)
-                        .overlay(
-                            Image(uiImage: image)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .scaledToFill()
-                                .clipShape(Circle())
-                        )
-                        .shadow(color: Color("Shadow").opacity(0.1), radius: 10, x: 0, y: 0)
-                } else {
-                    Circle()
-                        .frame(width: 50, height: 50)
-                        .overlay(AnimatedCirclePlaceholder())
-                        .shadow(color: Color("Shadow").opacity(0.1), radius: 10, x: 0, y: 0)
-                        .onAppear {
-                            if let url = URL(string: section.userImage) {
-                                userImageLoader.load(url: url)
-                            }
-                        }
-                }
+                UserImage(userImageLoader: userImageLoader, imageUrl: section.userImage, size: userImageSize)
                 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(section.userName)
@@ -117,3 +97,4 @@ struct SharedThreadContent: View {
 #Preview {
     SharedThreadContent(userImageLoader: ImageLoader(), sectionImageLoader: ImageLoader(), locationFetcher: LocationFetcher(), section: sampleThreads[0], showCaption: true).padding()
 }
+

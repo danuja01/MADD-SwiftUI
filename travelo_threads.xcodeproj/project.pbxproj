@@ -40,6 +40,9 @@
 		ADDF4D7E2C11FFC7000C9B1D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D7D2C11FFC7000C9B1D /* HomeView.swift */; };
 		ADDF4D802C120082000C9B1D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D7F2C120082000C9B1D /* ContentView.swift */; };
 		ADDF4D912C1201E5000C9B1D /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D902C1201E5000C9B1D /* TabBar.swift */; };
+		ADDFE7C62C1479C2003BAC64 /* CommentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7C52C1479C2003BAC64 /* CommentCard.swift */; };
+		ADDFE7C82C147BB5003BAC64 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7C72C147BB5003BAC64 /* Comment.swift */; };
+		ADDFE7CA2C149395003BAC64 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7C92C149395003BAC64 /* UserImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +79,9 @@
 		ADDF4D7D2C11FFC7000C9B1D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		ADDF4D7F2C120082000C9B1D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		ADDF4D902C1201E5000C9B1D /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		ADDFE7C52C1479C2003BAC64 /* CommentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCard.swift; sourceTree = "<group>"; };
+		ADDFE7C72C147BB5003BAC64 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		ADDFE7C92C149395003BAC64 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				AD28557E2C124F34002FF1B5 /* Thread.swift */,
+				ADDFE7C72C147BB5003BAC64 /* Comment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -170,6 +177,7 @@
 				AD2855812C12D546002FF1B5 /* CardButtons.swift */,
 				AD28559E2C144C03002FF1B5 /* SharedThreadContent.swift */,
 				AD2855842C12D8C8002FF1B5 /* CardImage.swift */,
+				ADDFE7C92C149395003BAC64 /* UserImage.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -186,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				AD2855AC2C146520002FF1B5 /* CommentTextArea.swift */,
+				ADDFE7C52C1479C2003BAC64 /* CommentCard.swift */,
 			);
 			path = ExpandedView;
 			sourceTree = "<group>";
@@ -348,7 +357,9 @@
 				AD2855AF2C146884002FF1B5 /* CustomTextField.swift in Sources */,
 				ADDF4D912C1201E5000C9B1D /* TabBar.swift in Sources */,
 				AD28550F2C120C72002FF1B5 /* Extensions.swift in Sources */,
+				ADDFE7C82C147BB5003BAC64 /* Comment.swift in Sources */,
 				AD28557F2C124F34002FF1B5 /* Thread.swift in Sources */,
+				ADDFE7C62C1479C2003BAC64 /* CommentCard.swift in Sources */,
 				AD28559F2C144C03002FF1B5 /* SharedThreadContent.swift in Sources */,
 				AD2855A72C14562B002FF1B5 /* OpenMaps.swift in Sources */,
 				AD28558F2C1357F5002FF1B5 /* ExpandedThreadView.swift in Sources */,
@@ -361,6 +372,7 @@
 				AD2855882C13314F002FF1B5 /* AnimatedCirclePlaceholder.swift in Sources */,
 				AD2855AD2C146520002FF1B5 /* CommentTextArea.swift in Sources */,
 				AD2855A12C1453F2002FF1B5 /* CloseButton.swift in Sources */,
+				ADDFE7CA2C149395003BAC64 /* UserImage.swift in Sources */,
 				AD2855942C1363D4002FF1B5 /* LocationFetcher.swift in Sources */,
 				AD28558D2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift in Sources */,
 				AD2855852C12D8C8002FF1B5 /* CardImage.swift in Sources */,

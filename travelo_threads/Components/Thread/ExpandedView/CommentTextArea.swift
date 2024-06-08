@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct CommentTextArea: View {
-    @State private var comment: String = ""
+    @State var comment:String
     @FocusState private var isFocused: Bool
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Color("Green3")
+            Color("CommentArea")
                 .cornerRadius(30)
                 .overlay(
                     RoundedRectangle(cornerRadius: 30)
@@ -23,17 +23,16 @@ struct CommentTextArea: View {
             TextEditor(text: $comment)
                 .focused($isFocused)
                 .lineSpacing(10.0)
-                .lineLimit(10...)
                 .scrollContentBackground(.hidden)
-                .background(Color("Green3"))
-                .cornerRadius(30)
+                .background(Color("CommentArea"))
                 .padding()
+                .autocorrectionDisabled()
             
             if comment.isEmpty && !isFocused {
                 HStack {
                     Image("Icon Comment")
                     Text("Comment")
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color("Green2").opacity(0.6))
                         .fontWeight(.bold)
                 }
                 .padding()
@@ -43,8 +42,8 @@ struct CommentTextArea: View {
     }
 }
 
+
 #Preview {
-    CommentTextArea().padding()
-
+    CommentTextArea(comment: "")
+        .padding()
 }
-

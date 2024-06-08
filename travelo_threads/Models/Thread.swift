@@ -8,7 +8,7 @@ import SwiftUI
 import CoreLocation
 import Foundation
 
-struct Thread: Identifiable {
+struct Thread: Identifiable, Equatable {
     var id: String
     var title: String
     var caption: String
