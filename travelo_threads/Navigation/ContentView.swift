@@ -9,23 +9,28 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("selectedTab") var selectedTab: Tab = .home
+    @State private var isAddNewThreadPresented = false
 
     var body: some View {
-        ZStack() {
+        ZStack {
             NavigationView {
-                    switch selectedTab {
-                    case .home:
-                        HomeView()
-                            .frame(maxHeight: .infinity)
-                    case .add:
-                        Text("Add View")
-                    case .save:
-                        Text("Save View")
-                    case .user:
-                        Text("User View")
-                    }
+                switch selectedTab {
+                case .home:
+                    HomeView()
+                        .frame(maxHeight: .infinity)
+                case .save:
+                    Text("Save View")
+                case .user:
+                    Text("User View")
+                default:
+                    EmptyView()
+                }
             }
-            TabBar()
+            .sheet(isPresented: $isAddNewThreadPresented) {
+                AddNewThread()
+            }
+
+            TabBar(isAddNewThreadPresented: $isAddNewThreadPresented)
                 .padding(.bottom, 20)
         }
         .ignoresSafeArea()

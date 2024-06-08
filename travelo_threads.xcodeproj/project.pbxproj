@@ -43,6 +43,7 @@
 		ADDFE7C62C1479C2003BAC64 /* CommentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7C52C1479C2003BAC64 /* CommentCard.swift */; };
 		ADDFE7C82C147BB5003BAC64 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7C72C147BB5003BAC64 /* Comment.swift */; };
 		ADDFE7CA2C149395003BAC64 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7C92C149395003BAC64 /* UserImage.swift */; };
+		ADDFE7CC2C14BF3D003BAC64 /* AddNewThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7CB2C14BF3D003BAC64 /* AddNewThread.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		ADDFE7C52C1479C2003BAC64 /* CommentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCard.swift; sourceTree = "<group>"; };
 		ADDFE7C72C147BB5003BAC64 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		ADDFE7C92C149395003BAC64 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
+		ADDFE7CB2C14BF3D003BAC64 /* AddNewThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewThread.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,6 +272,7 @@
 				ADDF4D612C11E0C4000C9B1D /* SignIn.swift */,
 				ADDF4D7D2C11FFC7000C9B1D /* HomeView.swift */,
 				AD28558E2C1357F4002FF1B5 /* ExpandedThreadView.swift */,
+				ADDFE7CB2C14BF3D003BAC64 /* AddNewThread.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				AD2855A12C1453F2002FF1B5 /* CloseButton.swift in Sources */,
 				ADDFE7CA2C149395003BAC64 /* UserImage.swift in Sources */,
 				AD2855942C1363D4002FF1B5 /* LocationFetcher.swift in Sources */,
+				ADDFE7CC2C14BF3D003BAC64 /* AddNewThread.swift in Sources */,
 				AD28558D2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift in Sources */,
 				AD2855852C12D8C8002FF1B5 /* CardImage.swift in Sources */,
 				ADDF4D7E2C11FFC7000C9B1D /* HomeView.swift in Sources */,

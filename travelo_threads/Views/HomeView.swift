@@ -26,7 +26,7 @@ struct HomeView: View {
             }
             .fullScreenCover(item: $selectedThread) { thread in
                 ExpandedThreadView(section: thread)
-            }
+            }.navigationTitle("Threads")
         }
     }
     

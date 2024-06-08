@@ -10,6 +10,7 @@ import RiveRuntime
 
 struct TabBar: View {
     @AppStorage("selectedTab") var selectedTab: Tab = .home
+    @Binding var isAddNewThreadPresented: Bool
     
     var body: some View {
         VStack {
@@ -29,8 +30,8 @@ struct TabBar: View {
             )
             .padding(.horizontal, 24)
             .background(GeometryReader { geometry in
-                           Color.clear.preference(key: TabBarHeightPreferenceKey.self, value: geometry.size.height)
-                       })
+                Color.clear.preference(key: TabBarHeightPreferenceKey.self, value: geometry.size.height)
+            })
         }
     }
     
@@ -42,7 +43,11 @@ struct TabBar: View {
                     try? item.icon.setInput("active", value: false)
                 }
                 withAnimation {
-                    selectedTab = item.tab
+                    if item.tab == .add {
+                        isAddNewThreadPresented = true
+                    } else {
+                        selectedTab = item.tab
+                    }
                 }
             } label: {
                 item.icon.view()
@@ -73,7 +78,7 @@ struct TabBarHeightPreferenceKey: PreferenceKey {
 
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
-        TabBar()
+        TabBar(isAddNewThreadPresented: .constant(false))
     }
 }
 
@@ -88,7 +93,6 @@ var tabItems = [
     TabItem(icon: RiveViewModel(fileName: "icons", stateMachineName: "PLUS_Interactivity", artboardName: "PLUS"), tab: .add),
     TabItem(icon: RiveViewModel(fileName: "icons", stateMachineName: "BOOKMARK_Interactivity", artboardName: "BOOKMARK"), tab: .save),
     TabItem(icon: RiveViewModel(fileName: "icons", stateMachineName: "USER_Interactivity", artboardName: "USER"), tab: .user)
-    
 ]
 
 enum Tab: String {
