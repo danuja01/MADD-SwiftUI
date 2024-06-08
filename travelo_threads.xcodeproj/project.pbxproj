@@ -23,6 +23,9 @@
 		AD28558D2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28558C2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift */; };
 		AD28558F2C1357F5002FF1B5 /* ExpandedThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28558E2C1357F4002FF1B5 /* ExpandedThreadView.swift */; };
 		AD2855922C135AC1002FF1B5 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855912C135AC1002FF1B5 /* ImageLoader.swift */; };
+		AD2855942C1363D4002FF1B5 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855932C1363D4002FF1B5 /* LocationFetcher.swift */; };
+		AD2855962C1364E3002FF1B5 /* CLLocationCoordinate2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855952C1364E3002FF1B5 /* CLLocationCoordinate2D.swift */; };
+		AD2855982C1383C8002FF1B5 /* Training.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2855972C1383C8002FF1B5 /* Training.swift */; };
 		ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */; };
 		ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D612C11E0C4000C9B1D /* SignIn.swift */; };
 		ADDF4D642C11E0C6000C9B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */; };
@@ -51,6 +54,9 @@
 		AD28558C2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedRectanglePlaceholder.swift; sourceTree = "<group>"; };
 		AD28558E2C1357F4002FF1B5 /* ExpandedThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedThreadView.swift; sourceTree = "<group>"; };
 		AD2855912C135AC1002FF1B5 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		AD2855932C1363D4002FF1B5 /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
+		AD2855952C1364E3002FF1B5 /* CLLocationCoordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2D.swift; sourceTree = "<group>"; };
+		AD2855972C1383C8002FF1B5 /* Training.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Training.swift; sourceTree = "<group>"; };
 		ADDF4D5C2C11E0C4000C9B1D /* travelo_threads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travelo_threads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = travelo_threadsApp.swift; sourceTree = "<group>"; };
 		ADDF4D612C11E0C4000C9B1D /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
@@ -132,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				AD28558A2C1334B0002FF1B5 /* PlaceholderAnimation.swift */,
+				AD2855952C1364E3002FF1B5 /* CLLocationCoordinate2D.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -140,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				AD2855912C135AC1002FF1B5 /* ImageLoader.swift */,
+				AD2855932C1363D4002FF1B5 /* LocationFetcher.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -175,6 +183,7 @@
 				ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */,
 				ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */,
 				ADDF4D652C11E0C6000C9B1D /* Preview Content */,
+				AD2855972C1383C8002FF1B5 /* Training.swift */,
 			);
 			path = travelo_threads;
 			sourceTree = "<group>";
@@ -304,11 +313,14 @@
 				AD2855132C120CB7002FF1B5 /* CustomButton.swift in Sources */,
 				ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */,
 				AD2855822C12D546002FF1B5 /* CardButtons.swift in Sources */,
+				AD2855982C1383C8002FF1B5 /* Training.swift in Sources */,
 				AD28558B2C1334B0002FF1B5 /* PlaceholderAnimation.swift in Sources */,
 				AD2855882C13314F002FF1B5 /* AnimatedCirclePlaceholder.swift in Sources */,
+				AD2855942C1363D4002FF1B5 /* LocationFetcher.swift in Sources */,
 				AD28558D2C133762002FF1B5 /* AnimatedRectanglePlaceholder.swift in Sources */,
 				AD2855852C12D8C8002FF1B5 /* CardImage.swift in Sources */,
 				ADDF4D7E2C11FFC7000C9B1D /* HomeView.swift in Sources */,
+				AD2855962C1364E3002FF1B5 /* CLLocationCoordinate2D.swift in Sources */,
 				ADDF4D802C120082000C9B1D /* ContentView.swift in Sources */,
 				AD2855112C120C9B002FF1B5 /* CustomFont.swift in Sources */,
 				AD2855922C135AC1002FF1B5 /* ImageLoader.swift in Sources */,

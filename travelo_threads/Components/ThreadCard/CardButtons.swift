@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CardButtons: View {
+    var color: Color = .white
     var body: some View {
         HStack {
             Spacer()
@@ -16,7 +17,7 @@ struct CardButtons: View {
                     // Action for the heart button
                 }) {
                     Image(systemName: "heart")
-                        .foregroundColor(.white)
+                        .foregroundColor(color)
                         .fontWeight(.medium)
                         .font(.system(size: 23))
                 }
@@ -24,7 +25,7 @@ struct CardButtons: View {
                     // Action for the bookmark button
                 }) {
                     Image(systemName: "bookmark")
-                        .foregroundColor(.white)
+                        .foregroundColor(color)
                         .fontWeight(.medium)
                         .font(.system(size: 23))
                 }
