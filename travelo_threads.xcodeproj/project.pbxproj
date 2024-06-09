@@ -46,6 +46,8 @@
 		ADDFE7D12C14D9E2003BAC64 /* AddNewThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7D02C14D9E2003BAC64 /* AddNewThread.swift */; };
 		ADDFE7D32C14E589003BAC64 /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7D22C14E589003BAC64 /* SearchManager.swift */; };
 		ADDFE7D72C14EDCE003BAC64 /* LocationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7D62C14EDCE003BAC64 /* LocationSearchView.swift */; };
+		ADDFE7D92C14F185003BAC64 /* CustomTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7D82C14F185003BAC64 /* CustomTextArea.swift */; };
+		ADDFE7DC2C163428003BAC64 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7DB2C163428003BAC64 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +90,8 @@
 		ADDFE7D02C14D9E2003BAC64 /* AddNewThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewThread.swift; sourceTree = "<group>"; };
 		ADDFE7D22C14E589003BAC64 /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 		ADDFE7D62C14EDCE003BAC64 /* LocationSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchView.swift; sourceTree = "<group>"; };
+		ADDFE7D82C14F185003BAC64 /* CustomTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextArea.swift; sourceTree = "<group>"; };
+		ADDFE7DB2C163428003BAC64 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +178,7 @@
 				AD2855932C1363D4002FF1B5 /* LocationFetcher.swift */,
 				AD2855A62C14562B002FF1B5 /* OpenMaps.swift */,
 				ADDFE7D22C14E589003BAC64 /* SearchManager.swift */,
+				ADDFE7DB2C163428003BAC64 /* ImagePicker.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -286,6 +291,7 @@
 		ADDFE7CD2C14D32B003BAC64 /* AddNewThread */ = {
 			isa = PBXGroup;
 			children = (
+				ADDFE7D82C14F185003BAC64 /* CustomTextArea.swift */,
 				ADDFE7D62C14EDCE003BAC64 /* LocationSearchView.swift */,
 			);
 			path = AddNewThread;
@@ -374,6 +380,7 @@
 				AD2855AF2C146884002FF1B5 /* CustomTextField.swift in Sources */,
 				ADDF4D912C1201E5000C9B1D /* TabBar.swift in Sources */,
 				AD28550F2C120C72002FF1B5 /* Extensions.swift in Sources */,
+				ADDFE7DC2C163428003BAC64 /* ImagePicker.swift in Sources */,
 				ADDFE7C82C147BB5003BAC64 /* Comment.swift in Sources */,
 				AD28557F2C124F34002FF1B5 /* Thread.swift in Sources */,
 				ADDFE7C62C1479C2003BAC64 /* CommentCard.swift in Sources */,
@@ -398,6 +405,7 @@
 				AD2855962C1364E3002FF1B5 /* CLLocationCoordinate2D.swift in Sources */,
 				ADDF4D802C120082000C9B1D /* ContentView.swift in Sources */,
 				AD2855112C120C9B002FF1B5 /* CustomFont.swift in Sources */,
+				ADDFE7D92C14F185003BAC64 /* CustomTextArea.swift in Sources */,
 				AD2855922C135AC1002FF1B5 /* ImageLoader.swift in Sources */,
 				AD28557C2C124EAD002FF1B5 /* ThreadCard.swift in Sources */,
 				ADDFE7D72C14EDCE003BAC64 /* LocationSearchView.swift in Sources */,

@@ -14,18 +14,21 @@ struct CustomTextField: ViewModifier {
     var cornerRadius: CGFloat = 10
 
     func body(content: Content) -> some View {
-        ZStack(alignment: .leading) {
-            if let image = image {
-                image
-                    .padding(.leading, 8)
-            }
-            content
-                .padding(15)
-                .padding(.leading, image != nil ? 36 : 15) // Adjust padding if image is present
-                .background(backgroundColor)
-                .mask(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(borderColor, lineWidth: 1))
-        }
+        content
+            .padding(15)
+            .padding(.leading, image != nil ? 40 : 15) // Adjust padding if image is present
+            .background(backgroundColor)
+            .mask(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(borderColor, lineWidth: 1))
+            .overlay(
+                HStack {
+                    if let image = image {
+                        image
+                            .padding(.leading, 8)
+                        Spacer()
+                    }
+                }
+            )
     }
 }
 
@@ -34,4 +37,3 @@ extension View {
         modifier(CustomTextField(image: image, backgroundColor: backgroundColor, borderColor: borderColor, cornerRadius: cornerRadius))
     }
 }
-
