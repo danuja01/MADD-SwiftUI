@@ -43,7 +43,8 @@ struct CustomTextArea: View {
                     Text(placeholder)
                         .foregroundColor(Color("Green2").opacity(0.6))
                 }
-                .padding()
+                .padding(.vertical)
+                .padding(.horizontal, 10)
             }
             
             VStack {

@@ -20,6 +20,7 @@ struct AddNewThread: View {
     @State private var isPresentingImagePicker: Bool = false
     @State private var isPresentingActionSheet: Bool = false
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
+    @State private var isImageHidden: Bool = false
 
     var body: some View {
         ZStack {
@@ -51,7 +52,7 @@ struct AddNewThread: View {
                                 .foregroundColor(.black)
                             Spacer()
                         }
-                        .padding()
+                        .padding(8)
                         .background(Color("Green3"))
                         .cornerRadius(20)
                         .overlay(
@@ -91,29 +92,43 @@ struct AddNewThread: View {
                             .default(Text("Take Photo")) {
                                 sourceType = .camera
                                 isPresentingImagePicker = true
+                                isImageHidden = false
                             },
                             .default(Text("Choose Photo")) {
                                 sourceType = .photoLibrary
                                 isPresentingImagePicker = true
+                                isImageHidden = false
                             },
                             .cancel()
                         ])
                     }
-                    .sheet(isPresented: $isPresentingImagePicker) {
+                    .fullScreenCover(isPresented: $isPresentingImagePicker) {
                         ImagePicker(image: $selectedImage, sourceType: sourceType)
-                    }
+                    }.ignoresSafeArea()
 
-                    if let selectedImage = selectedImage {
-                        Rectangle()
-                            .frame(height: 200)
-                            .foregroundColor(.black)
-                            .overlay(
-                                Image(uiImage: selectedImage)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .clipShape(Rectangle())
-                            )
-                            .cornerRadius(20)
+                    if let selectedImage = selectedImage, !isImageHidden {
+                        ZStack(alignment: .topTrailing) {
+                            Rectangle()
+                                .frame(height: 200)
+                                .foregroundColor(.black)
+                                .overlay(
+                                    Image(uiImage: selectedImage)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .clipShape(Rectangle())
+                                )
+                                .cornerRadius(20)
+
+                            Button(action: {
+                                isImageHidden = true
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.white)
+                                    .background(Color.black.opacity(0.6))
+                                    .clipShape(Circle())
+                            }
+                            .padding()
+                        }
                     }
                 }
                 .padding(.bottom, 20)
