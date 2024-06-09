@@ -41,7 +41,7 @@ struct AddNewThread: View {
 
                 VStack(spacing: 20) {
                     TextField("Where did you go?", text: $title)
-                        .customTextField(image: Image("Icon Car"), backgroundColor: Color("Green3"), borderColor: Color("Green1"), cornerRadius: 20)
+                        .customTextField(image: Image("Icon Car"), backgroundColor: Color("CommentArea"), borderColor: Color("Green1"), cornerRadius: 20)
 
                     Button(action: {
                         isPresentingLocationSearch = true
@@ -53,7 +53,7 @@ struct AddNewThread: View {
                             Spacer()
                         }
                         .padding(8)
-                        .background(Color("Green3"))
+                        .background(Color("CommentArea"))
                         .cornerRadius(20)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
