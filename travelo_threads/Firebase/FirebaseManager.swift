@@ -34,7 +34,7 @@ class FirebaseManager {
             }
         }
     }
-
+    
     func uploadUserProfileImage(image: UIImage, completion: @escaping (String) -> Void) {
         let imageData: Data
         let contentType: String

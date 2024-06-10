@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct SignIn: View {
+    @EnvironmentObject var authManager: AuthenticationManager
     @State var email = ""
     @State var password = ""
     @State private var isPresentingSignUp = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
 
     var body: some View {
         ZStack {
@@ -28,6 +31,9 @@ struct SignIn: View {
                         .foregroundColor(.secondary)
                     TextField("", text: $email)
                         .customTextField(image: Image("Icon Email"))
+                        .keyboardType(.emailAddress)
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
                 }
                 VStack(alignment: .leading) {
                     Text("Password")
@@ -36,22 +42,23 @@ struct SignIn: View {
                     SecureField("", text: $password)
                         .customTextField(image: Image("Icon Lock"))
                 }
-                Button {
-                    // logIn()
-                } label: {
+                Button(action: logIn) {
                     HStack {
                         Text("Sign in")
                             .font(.system(size: 17, weight: .semibold))
                     }
                     .largeButton()
                 }
-                
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                }
+
                 HStack {
                     Rectangle().frame(height: 1).opacity(0.1)
                     Text("OR").customFont(.subheadline2).foregroundColor(.black.opacity(0.3))
                     Rectangle().frame(height: 1).opacity(0.1)
                 }
-                
+
                 HStack {
                     Text("Don’t have an account? ")
                         .customFont(.subheadline)
@@ -76,6 +83,16 @@ struct SignIn: View {
         }
         .fullScreenCover(isPresented: $isPresentingSignUp) {
             SignUp()
+                .environmentObject(authManager)
+        }
+    }
+
+    func logIn() {
+        authManager.signIn(email: email, password: password) { success, message in
+            if !success {
+                alertMessage = message
+                showAlert = true
+            }
         }
     }
 }
@@ -83,3 +100,5 @@ struct SignIn: View {
 #Preview {
     SignIn()
 }
+
+

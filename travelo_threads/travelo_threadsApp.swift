@@ -10,10 +10,12 @@ import SwiftUI
 @main
 struct travelo_threadsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
+    @StateObject var authenticationManager = AuthenticationManager()  // Create an instance of UserAuth
+
     var body: some Scene {
         WindowGroup {
-            SignIn()
+            ContentView()
+                .environmentObject(authenticationManager)  // Provide the environment object
         }
     }
 }

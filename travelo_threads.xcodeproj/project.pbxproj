@@ -56,6 +56,8 @@
 		ADDFE7EC2C16E97D003BAC64 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = ADDFE7EB2C16E97D003BAC64 /* FirebaseStorage */; };
 		ADDFE7EE2C17095A003BAC64 /* FirebaseConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7ED2C17095A003BAC64 /* FirebaseConfigure.swift */; };
 		ADDFE7F02C1709DD003BAC64 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7EF2C1709DD003BAC64 /* StringExtensions.swift */; };
+		ADDFE7F22C172B29003BAC64 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7F12C172B29003BAC64 /* AuthenticationManager.swift */; };
+		ADDFE7F62C17338A003BAC64 /* ContentView_Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7F52C17338A003BAC64 /* ContentView_Previews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +107,8 @@
 		ADDFE7E92C16E7DC003BAC64 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		ADDFE7ED2C17095A003BAC64 /* FirebaseConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfigure.swift; sourceTree = "<group>"; };
 		ADDFE7EF2C1709DD003BAC64 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		ADDFE7F12C172B29003BAC64 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		ADDFE7F52C17338A003BAC64 /* ContentView_Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView_Previews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				ADDF4D662C11E0C6000C9B1D /* Preview Assets.xcassets */,
+				ADDFE7F52C17338A003BAC64 /* ContentView_Previews.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -322,6 +327,7 @@
 			children = (
 				ADDFE7E92C16E7DC003BAC64 /* FirebaseManager.swift */,
 				ADDFE7ED2C17095A003BAC64 /* FirebaseConfigure.swift */,
+				ADDFE7F12C172B29003BAC64 /* AuthenticationManager.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -417,6 +423,7 @@
 				ADDF4D912C1201E5000C9B1D /* TabBar.swift in Sources */,
 				AD28550F2C120C72002FF1B5 /* Extensions.swift in Sources */,
 				ADDFE7DC2C163428003BAC64 /* ImagePicker.swift in Sources */,
+				ADDFE7F62C17338A003BAC64 /* ContentView_Previews.swift in Sources */,
 				ADDFE7C82C147BB5003BAC64 /* Comment.swift in Sources */,
 				AD28557F2C124F34002FF1B5 /* Thread.swift in Sources */,
 				ADDFE7C62C1479C2003BAC64 /* CommentCard.swift in Sources */,
@@ -444,6 +451,7 @@
 				ADDFE7EA2C16E7DC003BAC64 /* FirebaseManager.swift in Sources */,
 				AD2855112C120C9B002FF1B5 /* CustomFont.swift in Sources */,
 				ADDFE7D92C14F185003BAC64 /* CustomTextArea.swift in Sources */,
+				ADDFE7F22C172B29003BAC64 /* AuthenticationManager.swift in Sources */,
 				AD2855922C135AC1002FF1B5 /* ImageLoader.swift in Sources */,
 				AD28557C2C124EAD002FF1B5 /* ThreadCard.swift in Sources */,
 				ADDFE7D72C14EDCE003BAC64 /* LocationSearchView.swift in Sources */,
