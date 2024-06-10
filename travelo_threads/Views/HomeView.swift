@@ -10,7 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @State private var tabBarHeight: CGFloat = 0
     @State private var selectedThread: Thread?
-    
+    @State private var threads: [Thread] = []
+
     var body: some View {
         ZStack {
             Color("Background").ignoresSafeArea()
@@ -19,8 +20,9 @@ struct HomeView: View {
             }
             .scrollIndicators(.never)
             .refreshable {
-//                impliment refreshhh!!
+                fetchThreads()
             }
+            .onAppear(perform: fetchThreads)
             .onPreferenceChange(TabBarHeightPreferenceKey.self) { value in
                 tabBarHeight = value
             }
@@ -32,17 +34,23 @@ struct HomeView: View {
     
     var content: some View {
         VStack(alignment: .leading, spacing: 20) {
-            ForEach(sampleThreads) { section in
+            ForEach(threads) { thread in
                 Button(action: {
-                    selectedThread = section
+                    selectedThread = thread
                 }) {
-                    ThreadCard(section: section)
+                    ThreadCard(section: thread)
                 }
                 .buttonStyle(PlainButtonStyle())
             }
         }
         .padding()
         .padding(.bottom, tabBarHeight + 50)
+    }
+
+    func fetchThreads() {
+        FirebaseManager.shared.fetchThreads { fetchedThreads in
+            threads = fetchedThreads
+        }
     }
 }
 
