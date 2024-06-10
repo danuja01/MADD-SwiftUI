@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomTextArea: View {
-    @State var text: String
+    @Binding var text: String
     var placeholder: String
     var height: CGFloat = 120
     var maxLength: Int = 200
@@ -44,7 +44,7 @@ struct CustomTextArea: View {
                         .foregroundColor(Color("Green2").opacity(0.6))
                 }
                 .padding(.vertical)
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 12)
             }
             
             VStack {
@@ -63,6 +63,7 @@ struct CustomTextArea: View {
 }
 
 #Preview {
-    CustomTextArea(text: "", placeholder: "Go ahead, tell us more!")
+    CustomTextArea(text: .constant(""), placeholder: "Go ahead, tell us more!")
         .padding()
 }
+

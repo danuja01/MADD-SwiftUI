@@ -58,6 +58,7 @@
 		ADDFE7F02C1709DD003BAC64 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7EF2C1709DD003BAC64 /* StringExtensions.swift */; };
 		ADDFE7F22C172B29003BAC64 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7F12C172B29003BAC64 /* AuthenticationManager.swift */; };
 		ADDFE7F62C17338A003BAC64 /* ContentView_Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7F52C17338A003BAC64 /* ContentView_Previews.swift */; };
+		ADDFE7F92C174C45003BAC64 /* GeoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDFE7F82C174C45003BAC64 /* GeoPoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +110,7 @@
 		ADDFE7EF2C1709DD003BAC64 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		ADDFE7F12C172B29003BAC64 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		ADDFE7F52C17338A003BAC64 /* ContentView_Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView_Previews.swift; sourceTree = "<group>"; };
+		ADDFE7F82C174C45003BAC64 /* GeoPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,7 @@
 				AD28558A2C1334B0002FF1B5 /* PlaceholderAnimation.swift */,
 				AD2855952C1364E3002FF1B5 /* CLLocationCoordinate2D.swift */,
 				ADDFE7EF2C1709DD003BAC64 /* StringExtensions.swift */,
+				ADDFE7F82C174C45003BAC64 /* GeoPoint.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				AD28557C2C124EAD002FF1B5 /* ThreadCard.swift in Sources */,
 				ADDFE7D72C14EDCE003BAC64 /* LocationSearchView.swift in Sources */,
 				ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */,
+				ADDFE7F92C174C45003BAC64 /* GeoPoint.swift in Sources */,
 				ADDFE7D32C14E589003BAC64 /* SearchManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -68,17 +68,21 @@ struct SharedThreadContent: View {
                         .font(.system(size: 17))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-
+                
                 HStack(spacing: 8) {
                     Image(systemName: "mappin.circle")
                         .font(.system(size: 20))
                     Text(locationFetcher.locationName)
                         .font(.system(size: 13, weight: .semibold))
                         .onAppear {
-                            locationFetcher.fetchLocation(for: section.location)
+                            if let geoPoint = section.location {
+                                locationFetcher.fetchLocation(for: geoPoint.toCLLocationCoordinate2D())
+                            }
                         }
                         .onTapGesture {
-                            openMaps(for: section.location)
+                            if let geoPoint = section.location {
+                                openMaps(for: geoPoint.toCLLocationCoordinate2D())
+                            }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }

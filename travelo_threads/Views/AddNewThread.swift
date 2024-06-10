@@ -8,8 +8,10 @@
 import SwiftUI
 import MapKit
 import CoreLocation
+import FirebaseAuth
 
 struct AddNewThread: View {
+    @EnvironmentObject var authManager: AuthenticationManager
     @FocusState private var isFocused: Bool
     @State private var title: String = ""
     @State private var location: CLLocationCoordinate2D?
@@ -21,6 +23,9 @@ struct AddNewThread: View {
     @State private var isPresentingActionSheet: Bool = false
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @State private var isImageHidden: Bool = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         ZStack {
@@ -32,7 +37,7 @@ struct AddNewThread: View {
                         .font(.title2.bold())
                     Spacer()
                     Button("Post".uppercased()) {
-                        // Post action
+                        addNewThread()
                     }
                     .font(.title3.bold())
                     .foregroundColor(Color("Green4"))
@@ -65,7 +70,7 @@ struct AddNewThread: View {
                         LocationSearchView(location: $location, locationName: $locationName)
                     }
 
-                    CustomTextArea(text: caption, placeholder: "Go ahead, tell us more!", height: 200)
+                    CustomTextArea(text: $caption, placeholder: "Go ahead, tell us more!", height: 200)
                         .focused($isFocused)
 
                     Button(action: {
@@ -137,9 +142,44 @@ struct AddNewThread: View {
             }
             .padding()
             .padding(.horizontal, 10)
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Notification"), message: Text(alertMessage), dismissButton: .default(Text("OK")) {
+                    if alertMessage == "Thread posted successfully" {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                })
+            }
         }
         .onTapGesture {
             isFocused = false
+        }
+    }
+
+    func addNewThread() {
+        guard let user = Auth.auth().currentUser else {
+            alertMessage = "User not authenticated"
+            showAlert = true
+            return
+        }
+
+        let newThread = Thread(
+            title: title,
+            caption: caption,
+            imageUrl: nil,
+            location: location,
+            userImage: authManager.userImageURL ?? "",
+            userName: authManager.userName ?? "Anonymous",
+            createdBy: user.uid
+        )
+
+        FirebaseManager.shared.addNewThread(thread: newThread, image: selectedImage) { success, message in
+            if success {
+                alertMessage = "Thread posted successfully"
+                showAlert = true
+            } else {
+                alertMessage = message ?? "Failed to post thread"
+                showAlert = true
+            }
         }
     }
 }
@@ -147,4 +187,3 @@ struct AddNewThread: View {
 #Preview {
     AddNewThread()
 }
-

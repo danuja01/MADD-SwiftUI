@@ -133,5 +133,38 @@ class FirebaseManager {
             }
         }
     }
+    
+    func addNewThread(thread: Thread, image: UIImage?, completion: @escaping (Bool, String?) -> Void) {
+            guard let userId = Auth.auth().currentUser?.uid else {
+                completion(false, "User not authenticated")
+                return
+            }
 
+            var threadData: [String: Any]
+            do {
+                threadData = try Firestore.Encoder().encode(thread) as! [String: Any]
+            } catch {
+                completion(false, "Failed to encode thread data")
+                return
+            }
+            
+            if let image = image {
+                uploadUserProfileImage(image: image) { imageUrl in
+                    threadData["imageUrl"] = imageUrl
+                    self.saveThreadData(threadData: threadData, completion: completion)
+                }
+            } else {
+                saveThreadData(threadData: threadData, completion: completion)
+            }
+        }
+
+        private func saveThreadData(threadData: [String: Any], completion: @escaping (Bool, String?) -> Void) {
+            Firestore.firestore().collection("threads").addDocument(data: threadData) { error in
+                if let error = error {
+                    completion(false, error.localizedDescription)
+                } else {
+                    completion(true, nil)
+                }
+            }
+        }
 }
