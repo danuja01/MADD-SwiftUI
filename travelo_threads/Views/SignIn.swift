@@ -10,6 +10,8 @@ import SwiftUI
 struct SignIn: View {
     @State var email = ""
     @State var password = ""
+    @State private var isPresentingSignUp = false
+
     var body: some View {
         ZStack {
             Color("Background").ignoresSafeArea()
@@ -35,7 +37,7 @@ struct SignIn: View {
                         .customTextField(image: Image("Icon Lock"))
                 }
                 Button {
-//                    logIn()
+                    // logIn()
                 } label: {
                     HStack {
                         Text("Sign in")
@@ -54,9 +56,12 @@ struct SignIn: View {
                     Text("Don’t have an account? ")
                         .customFont(.subheadline)
                         .foregroundColor(.secondary)
-                    Button("Sign up") {
-                        
-                    }.foregroundColor(Color("Green1"))
+                    Button(action: {
+                        isPresentingSignUp = true
+                    }) {
+                        Text("Sign up")
+                            .foregroundColor(Color("Green1"))
+                    }
                 }
             }
             .padding(30)
@@ -68,6 +73,9 @@ struct SignIn: View {
                     .stroke(.linearGradient(colors: [.white.opacity(0.8), .white.opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing))
             )
             .padding()
+        }
+        .fullScreenCover(isPresented: $isPresentingSignUp) {
+            SignUp()
         }
     }
 }

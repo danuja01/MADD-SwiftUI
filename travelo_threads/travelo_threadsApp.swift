@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct travelo_threadsApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SignIn()
         }
     }
 }
+
