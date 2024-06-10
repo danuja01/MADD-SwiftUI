@@ -11,6 +11,7 @@ import UIKit
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
     var sourceType: UIImagePickerController.SourceType
+    var imageName: Binding<String?>? = nil
 
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
@@ -22,19 +23,28 @@ struct ImagePicker: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+        Coordinator(self, imageName: imageName)
     }
 
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         let parent: ImagePicker
+        var imageName: Binding<String?>?
 
-        init(_ parent: ImagePicker) {
+        init(_ parent: ImagePicker, imageName: Binding<String?>?) {
             self.parent = parent
+            self.imageName = imageName
         }
 
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let selectedImage = info[.originalImage] as? UIImage {
-                parent.image = selectedImage
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+            if let uiImage = info[.originalImage] as? UIImage {
+                parent.image = uiImage
+                if let imageNameBinding = imageName {
+                    if let url = info[.imageURL] as? URL {
+                        imageNameBinding.wrappedValue = url.lastPathComponent
+                    } else {
+                        imageNameBinding.wrappedValue = "CapturedPhoto.jpg"
+                    }
+                }
             }
             picker.dismiss(animated: true)
         }
