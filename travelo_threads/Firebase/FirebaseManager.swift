@@ -284,19 +284,54 @@ class FirebaseManager {
             }
         }
         
-        func toggleLikeThread(threadId: String, userId: String, isLiked: Bool, completion: @escaping (Bool) -> Void) {
-            let userRef = db.collection("users").document(userId)
-            userRef.updateData([
-                "likedThreads": isLiked ? FieldValue.arrayRemove([threadId]) : FieldValue.arrayUnion([threadId])
-            ]) { error in
-                if let error = error {
-                    print("Error updating liked threads: \(error.localizedDescription)")
-                    completion(false)
-                } else {
-                    completion(true)
+    func toggleLikeThread(threadId: String, userId: String, isLiked: Bool, completion: @escaping (Bool) -> Void) {
+        let db = Firestore.firestore()
+        let threadRef = db.collection("threads").document(threadId)
+        let userRef = db.collection("users").document(userId)
+        
+        db.runTransaction({ (transaction, errorPointer) -> Any? in
+            let threadDocument: DocumentSnapshot
+            let userDocument: DocumentSnapshot
+            
+            do {
+                try threadDocument = transaction.getDocument(threadRef)
+                try userDocument = transaction.getDocument(userRef)
+            } catch let fetchError as NSError {
+                errorPointer?.pointee = fetchError
+                return nil
+            }
+            
+            guard let currentFavoriteCount = threadDocument.data()?["favoriteCount"] as? Int else {
+                return nil
+            }
+            
+            var updatedFavoriteCount = currentFavoriteCount
+            var updatedLikedThreads = userDocument.data()?["likedThreads"] as? [String] ?? []
+            
+            if isLiked {
+                updatedFavoriteCount -= 1
+                if let index = updatedLikedThreads.firstIndex(of: threadId) {
+                    updatedLikedThreads.remove(at: index)
                 }
+            } else {
+                updatedFavoriteCount += 1
+                updatedLikedThreads.append(threadId)
+            }
+            
+            transaction.updateData(["favoriteCount": updatedFavoriteCount], forDocument: threadRef)
+            transaction.updateData(["likedThreads": updatedLikedThreads], forDocument: userRef)
+            
+            return nil
+        }) { (object, error) in
+            if let error = error {
+                print("Transaction failed: \(error)")
+                completion(false)
+            } else {
+                completion(true)
             }
         }
+    }
+
         
         func toggleSaveThread(threadId: String, userId: String, isSaved: Bool, completion: @escaping (Bool) -> Void) {
             let userRef = db.collection("users").document(userId)
@@ -311,4 +346,6 @@ class FirebaseManager {
                 }
             }
         }
+    
+    
 }

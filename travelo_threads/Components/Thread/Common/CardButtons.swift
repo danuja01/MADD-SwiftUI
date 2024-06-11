@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct CardButtons: View {
     var threadId: String
@@ -15,13 +16,14 @@ struct CardButtons: View {
     var onLike: () -> Void
     var onSave: () -> Void
     var color: Color = .white
+    @Binding var favoriteCount: Int
 
     var body: some View {
         HStack {
             Spacer()
             HStack(spacing: 10) {
-                HStack(spacing:5){
-                    Text("10")
+                HStack(spacing: 5) {
+                    Text("\(favoriteCount)")
                         .font(.headline)
                     Button(action: {
                         onLike()
@@ -44,10 +46,12 @@ struct CardButtons: View {
             .padding(.top, 15)
             .padding(.trailing, 20)
         }
-        Spacer()
     }
 }
 
 #Preview {
-    CardButtons(threadId: "", userId: "", isLiked: false, isSaved: false, onLike: {}, onSave: {}, color: .black)
+    CardButtons(threadId: "sampleThreadId", userId: "sampleUserId", isLiked: false, isSaved: false, onLike: {}, onSave: {}, favoriteCount: .constant(0))
+        .background(Color.blue)
 }
+
+

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 struct ExpandedThreadView: View {
     @FocusState private var isFocused: Bool
@@ -15,6 +16,7 @@ struct ExpandedThreadView: View {
     @StateObject private var sectionImageLoader = ImageLoader()
     @StateObject private var locationFetcher = LocationFetcher()
     @State private var comments: [Comment] = []
+    @State private var favoriteCount: Int = 0
 
     var section: Thread
     
@@ -56,7 +58,8 @@ struct ExpandedThreadView: View {
                         onSave: {
                             toggleSave()
                         },
-                        color: .white
+                        color: .white,
+                        favoriteCount: $favoriteCount
                     )
                     .environmentObject(authManager)
                     .padding(.top, 0),
@@ -70,6 +73,7 @@ struct ExpandedThreadView: View {
         .onAppear {
             fetchComments()
             fetchUserData()
+            fetchFavoriteCount()
         }
         .onTapGesture {
             isFocused = false
@@ -145,6 +149,7 @@ struct ExpandedThreadView: View {
         FirebaseManager.shared.toggleLikeThread(threadId: section.id ?? "", userId: userId, isLiked: isLiked) { success in
             if success {
                 isLiked.toggle()
+                favoriteCount += isLiked ? 1 : -1
             }
         }
     }
@@ -157,11 +162,24 @@ struct ExpandedThreadView: View {
             }
         }
     }
+
+    func fetchFavoriteCount() {
+        let db = Firestore.firestore()
+        let threadRef = db.collection("threads").document(section.id ?? "")
+
+        threadRef.getDocument { document, error in
+            if let document = document, document.exists {
+                if let count = document.data()?["favoriteCount"] as? Int {
+                    favoriteCount = count
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
 }
 
 #Preview {
     ExpandedThreadView(section: sampleThreads[1])
         .environmentObject(AuthenticationManager())
 }
-
-

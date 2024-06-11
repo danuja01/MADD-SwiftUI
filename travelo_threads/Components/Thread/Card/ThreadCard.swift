@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 struct ThreadCard: View {
     @StateObject private var userImageLoader = ImageLoader()
@@ -20,6 +21,7 @@ struct ThreadCard: View {
     var forceReload: Bool = false
     @State private var isLiked: Bool = false
     @State private var isSaved: Bool = false
+    @State private var favoriteCount: Int = 0
     
     @EnvironmentObject var authManager: AuthenticationManager
 
@@ -50,7 +52,8 @@ struct ThreadCard: View {
                 onSave: {
                     toggleSave()
                 },
-                color: .white
+                color: .white,
+                favoriteCount: $favoriteCount
             )
             .environmentObject(authManager)
             .padding(.top, 0),
@@ -85,6 +88,7 @@ struct ThreadCard: View {
                 locationFetcher.fetchLocation(for: location.toCLLocationCoordinate2D(), forceReload: forceReload)
             }
             fetchUserData()
+            fetchFavoriteCount()
         }
     }
     
@@ -102,6 +106,7 @@ struct ThreadCard: View {
         FirebaseManager.shared.toggleLikeThread(threadId: section.id ?? "", userId: userId, isLiked: isLiked) { success in
             if success {
                 isLiked.toggle()
+                favoriteCount += isLiked ? 1 : -1
             }
         }
     }
@@ -114,10 +119,25 @@ struct ThreadCard: View {
             }
         }
     }
-}
 
+    func fetchFavoriteCount() {
+        let db = Firestore.firestore()
+        let threadRef = db.collection("threads").document(section.id ?? "")
+
+        threadRef.getDocument { document, error in
+            if let document = document, document.exists {
+                if let count = document.data()?["favoriteCount"] as? Int {
+                    favoriteCount = count
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
+}
 
 #Preview {
-    ExpandedThreadView(section: sampleThreads[1])
+    ThreadCard(section: sampleThreads[1], onDelete: {}, onEdit: {}, onTap: {})
         .environmentObject(AuthenticationManager())
 }
+
