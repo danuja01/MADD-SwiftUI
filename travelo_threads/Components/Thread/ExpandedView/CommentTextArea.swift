@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CommentTextArea: View {
-    @State var comment:String
+    @Binding var comment:String
     @FocusState private var isFocused: Bool
     
     var body: some View {
@@ -44,6 +44,6 @@ struct CommentTextArea: View {
 
 
 #Preview {
-    CommentTextArea(comment: "")
+    CommentTextArea(comment: Binding.constant(""))
         .padding()
 }

@@ -14,6 +14,7 @@ import UIKit
 
 class FirebaseManager {
     static let shared = FirebaseManager()  // Singleton instance
+    private let db = Firestore.firestore()
     
     func createUser(email: String, password: String, username: String, image: UIImage?, completion: @escaping (Bool, String) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
@@ -232,4 +233,37 @@ class FirebaseManager {
              }
          }
      }
+    
+    func fetchComments(threadId: String, completion: @escaping ([Comment]) -> Void) {
+            db.collection("threads").document(threadId).collection("comments")
+                .order(by: "timestamp", descending: false)
+                .getDocuments { snapshot, error in
+                    if let error = error {
+                        print("Error fetching comments: \(error)")
+                        completion([])
+                    } else {
+                        let comments = snapshot?.documents.compactMap { try? $0.data(as: Comment.self) } ?? []
+                        completion(comments)
+                    }
+                }
+        }
+    
+    func addComment(threadId: String, comment: Comment, completion: @escaping (Bool, String?) -> Void) {
+            do {
+                _ = try db.collection("threads").document(threadId).collection("comments").addDocument(from: comment)
+                completion(true, nil)
+            } catch {
+                completion(false, "Failed to add comment: \(error.localizedDescription)")
+            }
+        }
+    
+    func deleteComment(threadId: String, commentId: String, completion: @escaping (Bool, String?) -> Void) {
+            db.collection("threads").document(threadId).collection("comments").document(commentId).delete { error in
+                if let error = error {
+                    completion(false, "Failed to delete comment: \(error.localizedDescription)")
+                } else {
+                    completion(true, nil)
+                }
+            }
+        }
 }

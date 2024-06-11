@@ -10,21 +10,31 @@ import SwiftUI
 struct CommentCard: View {
     @StateObject private var userImageLoader = ImageLoader()
     
-    var section:Comment
-     var userImageSize: CGFloat = 35
+    var section: Comment
+    var userImageSize: CGFloat = 35
+    var onDelete: (() -> Void)? = nil
+    var currentUserId: String
 
     var body: some View {
-        VStack{
-            HStack(alignment:.top, spacing: 15){
+        VStack {
+            HStack(alignment:.top, spacing: 15) {
                 UserImage(userImageLoader: userImageLoader, imageUrl: section.userImage, size: userImageSize)
-                VStack(alignment: .leading){
+                VStack(alignment: .leading) {
                     Text(section.userName)
                         .font(.subheadline.weight(.semibold))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("This is Awesome I want to go again!")
+                    Text(section.text)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 Spacer()
+                
+                // Only show the delete button if the current user created the comment
+                if section.createdBy == currentUserId, let onDelete = onDelete {
+                    Button(action: onDelete) {
+                        Image(systemName: "trash")
+                            .foregroundColor(.red)
+                    }
+                }
             }
             .padding()
         }
@@ -36,6 +46,6 @@ struct CommentCard: View {
 }
 
 #Preview {
-    CommentCard(section: sampleComments[2]).padding()
-
+    CommentCard(section: sampleComments[2], onDelete: nil, currentUserId: "currentUserId")
+        .padding()
 }

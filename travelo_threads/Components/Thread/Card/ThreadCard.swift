@@ -33,6 +33,7 @@ struct ThreadCard: View {
         }
         .padding()
         .padding(.vertical, 10)
+        .padding(.top, 10)
         .overlay(
             CardButtons(),
             alignment: .topTrailing
