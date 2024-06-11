@@ -40,6 +40,7 @@
 		AD4E51DD2C17A237006AA13A /* EditThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E51DC2C17A237006AA13A /* EditThreadView.swift */; };
 		AD4E51DF2C181D74006AA13A /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E51DE2C181D74006AA13A /* SampleData.swift */; };
 		AD4E51E12C184DA6006AA13A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E51E02C184DA6006AA13A /* User.swift */; };
+		AD4E51E72C18CDC9006AA13A /* ThreadsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E51E62C18CDC9006AA13A /* ThreadsViewModel.swift */; };
 		ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */; };
 		ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D612C11E0C4000C9B1D /* SignIn.swift */; };
 		ADDF4D642C11E0C6000C9B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */; };
@@ -94,6 +95,7 @@
 		AD4E51DC2C17A237006AA13A /* EditThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditThreadView.swift; sourceTree = "<group>"; };
 		AD4E51DE2C181D74006AA13A /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		AD4E51E02C184DA6006AA13A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		AD4E51E62C18CDC9006AA13A /* ThreadsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsViewModel.swift; sourceTree = "<group>"; };
 		ADDF4D5C2C11E0C4000C9B1D /* travelo_threads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travelo_threads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = travelo_threadsApp.swift; sourceTree = "<group>"; };
 		ADDF4D612C11E0C4000C9B1D /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
@@ -245,6 +247,14 @@
 			path = ExpandedView;
 			sourceTree = "<group>";
 		};
+		AD4E51E52C18CDAC006AA13A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				AD4E51E62C18CDC9006AA13A /* ThreadsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		ADDF4D532C11E0C4000C9B1D = {
 			isa = PBXGroup;
 			children = (
@@ -264,6 +274,7 @@
 		ADDF4D5E2C11E0C4000C9B1D /* travelo_threads */ = {
 			isa = PBXGroup;
 			children = (
+				AD4E51E52C18CDAC006AA13A /* ViewModels */,
 				ADDFE7E62C16E64A003BAC64 /* Firebase */,
 				AD2855902C135A92002FF1B5 /* Utilities */,
 				AD2855892C133497002FF1B5 /* Extensions */,
@@ -456,6 +467,7 @@
 				AD28558B2C1334B0002FF1B5 /* PlaceholderAnimation.swift in Sources */,
 				AD2855882C13314F002FF1B5 /* AnimatedCirclePlaceholder.swift in Sources */,
 				AD2855AD2C146520002FF1B5 /* CommentTextArea.swift in Sources */,
+				AD4E51E72C18CDC9006AA13A /* ThreadsViewModel.swift in Sources */,
 				AD2855A12C1453F2002FF1B5 /* CloseButton.swift in Sources */,
 				ADDFE7CA2C149395003BAC64 /* UserImage.swift in Sources */,
 				AD2855942C1363D4002FF1B5 /* LocationFetcher.swift in Sources */,

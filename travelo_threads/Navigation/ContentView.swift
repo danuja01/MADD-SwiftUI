@@ -11,12 +11,14 @@ struct ContentView: View {
     @AppStorage("selectedTab") var selectedTab: Tab = .home
     @EnvironmentObject var userAuth: AuthenticationManager
     @State private var isAddNewThreadPresented = false
+    @StateObject private var threadsViewModel = ThreadsViewModel()
 
     var body: some View {
         ZStack {
             if userAuth.isAuthenticated {
                 authenticatedView
                     .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                    .environmentObject(threadsViewModel)
             } else {
                 SignIn()
                     .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing)))
@@ -31,7 +33,9 @@ struct ContentView: View {
         NavigationView {
             switch selectedTab {
             case .home:
-                HomeView().frame(maxHeight: .infinity)
+                HomeView()
+                    .frame(maxHeight: .infinity)
+                    .environmentObject(threadsViewModel)
             case .save:
                 Text("Save View")
             case .user:
@@ -41,7 +45,15 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $isAddNewThreadPresented) {
-            AddNewThreadView()
+            AddNewThreadView { newThread, image in
+                threadsViewModel.addThread(newThread, image: image) { success, message in
+                    if success {
+                        isAddNewThreadPresented = false
+                    } else {
+                        // Handle error
+                    }
+                }
+            }
         }
 
         TabBar(isAddNewThreadPresented: $isAddNewThreadPresented)
@@ -49,3 +61,7 @@ struct ContentView: View {
     }
 }
 
+#Preview {
+    ContentView()
+        .environmentObject(AuthenticationManager())
+}

@@ -11,10 +11,8 @@ import FirebaseAuth
 struct HomeView: View {
     @State private var tabBarHeight: CGFloat = 0
     @State private var selectedThread: Thread?
-    @State private var threads: [Thread] = []
+    @EnvironmentObject var threadsViewModel: ThreadsViewModel
     @State private var isPresentingAddNewThread = false
-
-    // Use an optional Thread for editing
     @State private var threadToEdit: Thread?
 
     var body: some View {
@@ -24,20 +22,31 @@ struct HomeView: View {
                 content
             }
             .scrollIndicators(.never)
-            .refreshable {
-                fetchThreads()
+            .onAppear {
+                threadsViewModel.fetchThreads()
             }
-            .onAppear(perform: fetchThreads)
             .onPreferenceChange(TabBarHeightPreferenceKey.self) { value in
                 tabBarHeight = value
             }
             .fullScreenCover(item: $selectedThread) { thread in
                 ExpandedThreadView(section: thread)
             }
-            .sheet(isPresented: $isPresentingAddNewThread, onDismiss: fetchThreads) {
-                AddNewThreadView()
+            .sheet(isPresented: $isPresentingAddNewThread, onDismiss: {
+                threadsViewModel.fetchThreads()
+            }) {
+                AddNewThreadView { newThread, image in
+                    threadsViewModel.addThread(newThread, image: image) { success, message in
+                        if success {
+                            isPresentingAddNewThread = false
+                        } else {
+                            // Handle error
+                        }
+                    }
+                }
             }
-            .sheet(item: $threadToEdit, onDismiss: fetchThreads) { thread in
+            .sheet(item: $threadToEdit, onDismiss: {
+                threadsViewModel.fetchThreads()
+            }) { thread in
                 EditThreadView(thread: thread) { updatedThread in
                     updateThread(updatedThread)
                 }
@@ -48,9 +57,13 @@ struct HomeView: View {
     
     var content: some View {
         VStack(alignment: .leading, spacing: 20) {
-            ForEach(threads) { thread in
+            ForEach(threadsViewModel.threads) { thread in
                 ThreadCard(section: thread, onDelete: {
-                    deleteThread(thread)
+                    threadsViewModel.deleteThread(thread) { success, message in
+                        if !success {
+                            // Handle error
+                        }
+                    }
                 }, onEdit: {
                     threadToEdit = thread
                 }, onTap: {
@@ -71,31 +84,12 @@ struct HomeView: View {
     }
 
     private func updateThread(_ updatedThread: Thread) {
-        guard let index = threads.firstIndex(where: { $0.id == updatedThread.id }) else { return }
-        threads[index] = updatedThread
-    }
-
-    func fetchThreads() {
-        FirebaseManager.shared.fetchThreads { fetchedThreads in
-            DispatchQueue.main.async {
-                threads = fetchedThreads
-            }
-        }
-    }
-
-    func deleteThread(_ thread: Thread) {
-        guard let threadId = thread.id else { return }
-        FirebaseManager.shared.deleteThread(threadId: threadId) { success, message in
-            if success {
-                fetchThreads()
-            } else {
-                // Show alert or handle error
-                print("Failed to delete thread: \(message ?? "Unknown error")")
-            }
-        }
+        guard let index = threadsViewModel.threads.firstIndex(where: { $0.id == updatedThread.id }) else { return }
+        threadsViewModel.threads[index] = updatedThread
     }
 }
 
 #Preview {
     HomeView()
+        .environmentObject(ThreadsViewModel())
 }

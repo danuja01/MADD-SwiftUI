@@ -27,6 +27,8 @@ struct AddNewThreadView: View {
     @State private var alertMessage = ""
     @Environment(\.presentationMode) var presentationMode
 
+    var onAddThread: (Thread, UIImage?) -> Void
+
     var body: some View {
         ZStack {
             Color("Background").ignoresSafeArea()
@@ -172,19 +174,11 @@ struct AddNewThreadView: View {
             createdBy: user.uid
         )
 
-        FirebaseManager.shared.addNewThread(thread: newThread, image: selectedImage) { success, message in
-            if success {
-                alertMessage = "Thread posted successfully"
-                showAlert = true
-            } else {
-                alertMessage = message ?? "Failed to post thread"
-                showAlert = true
-            }
-        }
+        onAddThread(newThread, selectedImage)
     }
 }
 
 #Preview {
-    AddNewThreadView()
+    AddNewThreadView { _, _ in }
 }
 
