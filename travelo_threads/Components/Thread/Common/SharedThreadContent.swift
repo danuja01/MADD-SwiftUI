@@ -18,7 +18,8 @@ struct SharedThreadContent: View {
     var showCaption: Bool = true
     var buttonColor: Color = Color.white
     var userImageSize: CGFloat = 50
-    
+    var forceReload: Bool = false
+
     var body: some View {
         VStack {
             HStack(spacing: 10) {
@@ -59,7 +60,7 @@ struct SharedThreadContent: View {
                         .cornerRadius(30)
                         .shadow(color: Color("Shadow").opacity(0.25), radius: 30, x: 0, y: 2)
                         .onAppear {
-                            sectionImageLoader.load(url: url)
+                            sectionImageLoader.load(url: url, forceReload: forceReload)
                         }
                 }
                 
@@ -76,7 +77,7 @@ struct SharedThreadContent: View {
                         .font(.system(size: 13, weight: .semibold))
                         .onAppear {
                             if let geoPoint = section.location {
-                                locationFetcher.fetchLocation(for: geoPoint.toCLLocationCoordinate2D())
+                                locationFetcher.fetchLocation(for: geoPoint.toCLLocationCoordinate2D(), forceReload: forceReload)
                             }
                         }
                         .onTapGesture {
@@ -99,6 +100,14 @@ struct SharedThreadContent: View {
 }
 
 #Preview {
-    SharedThreadContent(userImageLoader: ImageLoader(), sectionImageLoader: ImageLoader(), locationFetcher: LocationFetcher(), section: sampleThreads[0], showCaption: true).padding()
+    SharedThreadContent(
+        userImageLoader: ImageLoader(),
+        sectionImageLoader: ImageLoader(),
+        locationFetcher: LocationFetcher(),
+        section: sampleThreads[0],
+        showCaption: true,
+        forceReload: true
+    ).padding()
 }
+
 

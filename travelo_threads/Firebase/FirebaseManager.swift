@@ -169,23 +169,67 @@ class FirebaseManager {
     }
     
     func fetchThreads(completion: @escaping ([Thread]) -> Void) {
-        Firestore.firestore().collection("threads").order(by: "createdAt", descending: true).getDocuments { snapshot, error in
+           Firestore.firestore().collection("threads").order(by: "createdAt", descending: true).getDocuments(source: .server) { snapshot, error in
+               if let error = error {
+                   print("Error fetching threads: \(error)")
+                   completion([])
+                   return
+               }
+               
+               guard let documents = snapshot?.documents else {
+                   completion([])
+                   return
+               }
+               
+               let threads = documents.compactMap { document -> Thread? in
+                   try? document.data(as: Thread.self)
+               }
+               
+               completion(threads)
+           }
+       }
+    
+    func deleteThread(threadId: String, completion: @escaping (Bool, String?) -> Void) {
+        Firestore.firestore().collection("threads").document(threadId).delete { error in
             if let error = error {
-                print("Error fetching threads: \(error)")
-                completion([])
-                return
+                completion(false, error.localizedDescription)
+            } else {
+                completion(true, nil)
             }
-            
-            guard let documents = snapshot?.documents else {
-                completion([])
-                return
-            }
-            
-            let threads = documents.compactMap { document -> Thread? in
-                try? document.data(as: Thread.self)
-            }
-            
-            completion(threads)
         }
     }
+    
+    func updateThread(thread: Thread, image: UIImage?, completion: @escaping (Bool, String?) -> Void) {
+         guard let threadId = thread.id else {
+             completion(false, "Thread ID not found")
+             return
+         }
+         
+         var threadData: [String: Any]
+         do {
+             threadData = try Firestore.Encoder().encode(thread) as! [String: Any]
+         } catch {
+             completion(false, "Failed to encode thread data")
+             return
+         }
+         
+         if let image = image {
+             uploadUserProfileImage(image: image) { imageUrl in
+                 threadData["imageUrl"] = imageUrl
+                 self.saveUpdatedThreadData(threadId: threadId, threadData: threadData, completion: completion)
+             }
+         } else {
+             saveUpdatedThreadData(threadId: threadId, threadData: threadData, completion: completion)
+         }
+     }
+     
+     private func saveUpdatedThreadData(threadId: String, threadData: [String: Any], completion: @escaping (Bool, String?) -> Void) {
+         Firestore.firestore().collection("threads").document(threadId).updateData(threadData) { error in
+             if let error = error {
+                 completion(false, error.localizedDescription)
+             } else {
+                 completion(true, nil)
+             }
+         }
+     }
 }

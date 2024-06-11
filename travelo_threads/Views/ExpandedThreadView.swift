@@ -39,7 +39,7 @@ struct ExpandedThreadView: View {
                 .padding(.horizontal, 25)
                 .padding(.vertical, 10)
                 .overlay(
-                    CardButtons(color: Color("Button")).padding(.top, 10),
+                    CardButtons(color: Color("Button")).padding(.top, 0),
                     alignment: .topTrailing
                 )
                 .cornerRadius(30)
@@ -70,5 +70,5 @@ struct ExpandedThreadView: View {
 }
 
 #Preview {
-    ExpandedThreadView(section: sampleThreads[2])
+    ExpandedThreadView(section: sampleThreads[1])
 }

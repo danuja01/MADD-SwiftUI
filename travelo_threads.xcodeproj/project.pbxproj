@@ -37,6 +37,7 @@
 		AD4E51D72C177D27006AA13A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AD4E51D62C177D27006AA13A /* FirebaseFirestore */; };
 		AD4E51D92C177D27006AA13A /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AD4E51D82C177D27006AA13A /* FirebaseFirestoreSwift */; };
 		AD4E51DB2C177D27006AA13A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = AD4E51DA2C177D27006AA13A /* FirebaseStorage */; };
+		AD4E51DD2C17A237006AA13A /* EditThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E51DC2C17A237006AA13A /* EditThreadView.swift */; };
 		ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */; };
 		ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D612C11E0C4000C9B1D /* SignIn.swift */; };
 		ADDF4D642C11E0C6000C9B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */; };
@@ -88,6 +89,7 @@
 		AD2855AA2C145A7A002FF1B5 /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		AD2855AC2C146520002FF1B5 /* CommentTextArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTextArea.swift; sourceTree = "<group>"; };
 		AD2855AE2C146884002FF1B5 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		AD4E51DC2C17A237006AA13A /* EditThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditThreadView.swift; sourceTree = "<group>"; };
 		ADDF4D5C2C11E0C4000C9B1D /* travelo_threads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travelo_threads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = travelo_threadsApp.swift; sourceTree = "<group>"; };
 		ADDF4D612C11E0C4000C9B1D /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				AD28558E2C1357F4002FF1B5 /* ExpandedThreadView.swift */,
 				ADDFE7D02C14D9E2003BAC64 /* AddNewThread.swift */,
 				ADDFE7DD2C16D081003BAC64 /* SignUp.swift */,
+				AD4E51DC2C17A237006AA13A /* EditThreadView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 				ADDFE7DC2C163428003BAC64 /* ImagePicker.swift in Sources */,
 				ADDFE7F62C17338A003BAC64 /* ContentView_Previews.swift in Sources */,
 				ADDFE7C82C147BB5003BAC64 /* Comment.swift in Sources */,
+				AD4E51DD2C17A237006AA13A /* EditThreadView.swift in Sources */,
 				AD28557F2C124F34002FF1B5 /* Thread.swift in Sources */,
 				ADDFE7C62C1479C2003BAC64 /* CommentCard.swift in Sources */,
 				AD28559F2C144C03002FF1B5 /* SharedThreadContent.swift in Sources */,

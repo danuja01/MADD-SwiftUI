@@ -41,7 +41,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $isAddNewThreadPresented) {
-            AddNewThread()
+            AddNewThreadView()
         }
 
         TabBar(isAddNewThreadPresented: $isAddNewThreadPresented)

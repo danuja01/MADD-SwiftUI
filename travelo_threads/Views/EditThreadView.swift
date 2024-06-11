@@ -1,23 +1,25 @@
 //
-//  AddNewThread.swift
+//  EditThreadView.swift
 //  travelo_threads
 //
-//  Created by Danuja Jayasuriya on 2024-06-08.
+//  Created by Danuja Jayasuriya on 2024-06-11.
 //
 
 import SwiftUI
 import MapKit
 import CoreLocation
 import FirebaseAuth
+import FirebaseFirestore
 
-struct AddNewThreadView: View {
+struct EditThreadView: View {
     @EnvironmentObject var authManager: AuthenticationManager
     @FocusState private var isFocused: Bool
-    @State private var title: String = ""
+    @State private var thread: Thread
+    @State private var title: String
     @State private var location: CLLocationCoordinate2D?
     @State private var locationName: String = "Search Location"
     @State private var isPresentingLocationSearch: Bool = false
-    @State private var caption: String = ""
+    @State private var caption: String
     @State private var selectedImage: UIImage?
     @State private var isPresentingImagePicker: Bool = false
     @State private var isPresentingActionSheet: Bool = false
@@ -27,17 +29,26 @@ struct AddNewThreadView: View {
     @State private var alertMessage = ""
     @Environment(\.presentationMode) var presentationMode
 
+    var onSave: (Thread) -> Void
+
+    init(thread: Thread, onSave: @escaping (Thread) -> Void) {
+        self._thread = State(initialValue: thread)
+        self._title = State(initialValue: thread.title)
+        self._caption = State(initialValue: thread.caption)
+        self.onSave = onSave
+    }
+
     var body: some View {
         ZStack {
             Color("Background").ignoresSafeArea()
 
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Post a new thread")
+                    Text("Edit Thread")
                         .font(.title2.bold())
                     Spacer()
-                    Button("Post".uppercased()) {
-                        addNewThread()
+                    Button("Update".uppercased()) {
+                        updateThread()
                     }
                     .font(.title3.bold())
                     .foregroundColor(Color("Green4"))
@@ -144,7 +155,7 @@ struct AddNewThreadView: View {
             .padding(.horizontal, 10)
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Notification"), message: Text(alertMessage), dismissButton: .default(Text("OK")) {
-                    if alertMessage == "Thread posted successfully" {
+                    if alertMessage == "Thread updated successfully" {
                         presentationMode.wrappedValue.dismiss()
                     }
                 })
@@ -153,31 +164,41 @@ struct AddNewThreadView: View {
         .onTapGesture {
             isFocused = false
         }
+        .onAppear {
+            initializeEditView()
+        }
     }
 
-    func addNewThread() {
-        guard let user = Auth.auth().currentUser else {
-            alertMessage = "User not authenticated"
-            showAlert = true
-            return
+    func initializeEditView() {
+        if let location = thread.location {
+            self.location = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            self.locationName = "Selected Location"
         }
+        if let imageUrl = thread.imageUrl, let url = URL(string: imageUrl) {
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let data = data {
+                    DispatchQueue.main.async {
+                        self.selectedImage = UIImage(data: data)
+                    }
+                }
+            }.resume()
+        }
+    }
 
-        let newThread = Thread(
-            title: title,
-            caption: caption,
-            imageUrl: nil,
-            location: location,
-            userImage: authManager.userImageURL ?? "",
-            userName: authManager.userName ?? "Anonymous",
-            createdBy: user.uid
-        )
-
-        FirebaseManager.shared.addNewThread(thread: newThread, image: selectedImage) { success, message in
+    func updateThread() {
+        var updatedThread = thread
+        updatedThread.title = title
+        updatedThread.caption = caption
+        if let location = location {
+            updatedThread.location = GeoPoint(latitude: location.latitude, longitude: location.longitude)
+        }
+        FirebaseManager.shared.updateThread(thread: updatedThread, image: selectedImage) { success, message in
             if success {
-                alertMessage = "Thread posted successfully"
+                alertMessage = "Thread updated successfully"
                 showAlert = true
+                onSave(updatedThread) // Notify parent view about the update
             } else {
-                alertMessage = message ?? "Failed to post thread"
+                alertMessage = message ?? "Failed to update thread"
                 showAlert = true
             }
         }
@@ -185,6 +206,7 @@ struct AddNewThreadView: View {
 }
 
 #Preview {
-    AddNewThreadView()
+    EditThreadView(thread: sampleThreads[0]) { _ in }
 }
+
 
