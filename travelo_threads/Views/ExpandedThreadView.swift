@@ -58,7 +58,7 @@ struct ExpandedThreadView: View {
                         onSave: {
                             toggleSave()
                         },
-                        color: .white,
+                        color: Color("Button"),
                         favoriteCount: $favoriteCount
                     )
                     .environmentObject(authManager)

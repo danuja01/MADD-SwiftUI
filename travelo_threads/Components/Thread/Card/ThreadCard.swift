@@ -140,4 +140,3 @@ struct ThreadCard: View {
     ThreadCard(section: sampleThreads[1], onDelete: {}, onEdit: {}, onTap: {})
         .environmentObject(AuthenticationManager())
 }
-

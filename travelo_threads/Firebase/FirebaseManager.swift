@@ -332,20 +332,21 @@ class FirebaseManager {
         }
     }
 
-        
-        func toggleSaveThread(threadId: String, userId: String, isSaved: Bool, completion: @escaping (Bool) -> Void) {
-            let userRef = db.collection("users").document(userId)
-            userRef.updateData([
-                "savedThreads": isSaved ? FieldValue.arrayRemove([threadId]) : FieldValue.arrayUnion([threadId])
-            ]) { error in
-                if let error = error {
-                    print("Error updating saved threads: \(error.localizedDescription)")
-                    completion(false)
-                } else {
-                    completion(true)
-                }
+    func toggleSaveThread(threadId: String, userId: String, isSaved: Bool, completion: @escaping (Bool) -> Void) {
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userId)
+        userRef.updateData([
+            "savedThreads": isSaved ? FieldValue.arrayRemove([threadId]) : FieldValue.arrayUnion([threadId])
+        ]) { error in
+            if let error = error {
+                print("Error updating saved threads: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                completion(true)
             }
         }
+    }
+
     
     
 }
