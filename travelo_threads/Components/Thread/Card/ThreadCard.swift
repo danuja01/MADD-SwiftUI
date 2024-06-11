@@ -18,6 +18,10 @@ struct ThreadCard: View {
     var onEdit: () -> Void
     var onTap: () -> Void
     var forceReload: Bool = false
+    @State private var isLiked: Bool = false
+    @State private var isSaved: Bool = false
+    
+    @EnvironmentObject var authManager: AuthenticationManager
 
     var body: some View {
         VStack {
@@ -35,7 +39,21 @@ struct ThreadCard: View {
         .padding(.vertical, 10)
         .padding(.top, 10)
         .overlay(
-            CardButtons(),
+            CardButtons(
+                threadId: section.id ?? "",
+                userId: Auth.auth().currentUser?.uid ?? "",
+                isLiked: isLiked,
+                isSaved: isSaved,
+                onLike: {
+                    toggleLike()
+                },
+                onSave: {
+                    toggleSave()
+                },
+                color: .white
+            )
+            .environmentObject(authManager)
+            .padding(.top, 0),
             alignment: .topTrailing
         )
         .foregroundColor(.white)
@@ -60,18 +78,46 @@ struct ThreadCard: View {
             }
         }
         .onAppear {
-            // Reload images and location on appear
             if let imageUrl = section.imageUrl, let url = URL(string: imageUrl) {
                 sectionImageLoader.load(url: url, forceReload: forceReload)
             }
             if let location = section.location {
                 locationFetcher.fetchLocation(for: location.toCLLocationCoordinate2D(), forceReload: forceReload)
             }
+            fetchUserData()
+        }
+    }
+    
+    func fetchUserData() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        FirebaseManager.shared.fetchUserData(userId: userId) { user in
+            guard let user = user else { return }
+            isLiked = user.likedThreads.contains(section.id ?? "")
+            isSaved = user.savedThreads.contains(section.id ?? "")
+        }
+    }
+    
+    func toggleLike() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        FirebaseManager.shared.toggleLikeThread(threadId: section.id ?? "", userId: userId, isLiked: isLiked) { success in
+            if success {
+                isLiked.toggle()
+            }
+        }
+    }
+    
+    func toggleSave() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        FirebaseManager.shared.toggleSaveThread(threadId: section.id ?? "", userId: userId, isSaved: isSaved) { success in
+            if success {
+                isSaved.toggle()
+            }
         }
     }
 }
 
-#Preview {
-    ThreadCard(section: sampleThreads[0], onDelete: {}, onEdit: {}, onTap: {}).padding()
-}
 
+#Preview {
+    ExpandedThreadView(section: sampleThreads[1])
+        .environmentObject(AuthenticationManager())
+}

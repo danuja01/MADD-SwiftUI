@@ -14,6 +14,8 @@ import UIKit
 
 class FirebaseManager {
     static let shared = FirebaseManager()  // Singleton instance
+    private init() {}
+
     private let db = Firestore.firestore()
     
     func createUser(email: String, password: String, username: String, image: UIImage?, completion: @escaping (Bool, String) -> Void) {
@@ -267,6 +269,45 @@ class FirebaseManager {
                     completion(false, "Failed to delete comment: \(error.localizedDescription)")
                 } else {
                     completion(true, nil)
+                }
+            }
+        }
+    
+    func fetchUserData(userId: String, completion: @escaping (User?) -> Void) {
+            db.collection("users").document(userId).getDocument { document, error in
+                if let document = document, document.exists {
+                    let user = try? document.data(as: User.self)
+                    completion(user)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+        
+        func toggleLikeThread(threadId: String, userId: String, isLiked: Bool, completion: @escaping (Bool) -> Void) {
+            let userRef = db.collection("users").document(userId)
+            userRef.updateData([
+                "likedThreads": isLiked ? FieldValue.arrayRemove([threadId]) : FieldValue.arrayUnion([threadId])
+            ]) { error in
+                if let error = error {
+                    print("Error updating liked threads: \(error.localizedDescription)")
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }
+        }
+        
+        func toggleSaveThread(threadId: String, userId: String, isSaved: Bool, completion: @escaping (Bool) -> Void) {
+            let userRef = db.collection("users").document(userId)
+            userRef.updateData([
+                "savedThreads": isSaved ? FieldValue.arrayRemove([threadId]) : FieldValue.arrayUnion([threadId])
+            ]) { error in
+                if let error = error {
+                    print("Error updating saved threads: \(error.localizedDescription)")
+                    completion(false)
+                } else {
+                    completion(true)
                 }
             }
         }

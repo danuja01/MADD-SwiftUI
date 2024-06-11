@@ -20,6 +20,8 @@ struct ExpandedThreadView: View {
     
     @EnvironmentObject var authManager: AuthenticationManager
     @Environment(\.presentationMode) var presentationMode
+    @State private var isLiked: Bool = false
+    @State private var isSaved: Bool = false
     
     var body: some View {
         VStack {
@@ -43,7 +45,21 @@ struct ExpandedThreadView: View {
                 .padding(.vertical, 10)
                 .padding(.top, 10)
                 .overlay(
-                    CardButtons(color: Color("Button")).padding(.top, 0),
+                    CardButtons(
+                        threadId: section.id ?? "",
+                        userId: Auth.auth().currentUser?.uid ?? "",
+                        isLiked: isLiked,
+                        isSaved: isSaved,
+                        onLike: {
+                            toggleLike()
+                        },
+                        onSave: {
+                            toggleSave()
+                        },
+                        color: .white
+                    )
+                    .environmentObject(authManager)
+                    .padding(.top, 0),
                     alignment: .topTrailing
                 )
                 .cornerRadius(30)
@@ -53,6 +69,7 @@ struct ExpandedThreadView: View {
         .statusBar(hidden: true)
         .onAppear {
             fetchComments()
+            fetchUserData()
         }
         .onTapGesture {
             isFocused = false
@@ -69,7 +86,7 @@ struct ExpandedThreadView: View {
                 .focused($isFocused)
             
             VStack(spacing: 10) {
-                ForEach(comments) { comment in
+                ForEach(comments.reversed()) { comment in
                     CommentCard(section: comment, onDelete: {
                         deleteComment(comment)
                     }, currentUserId: Auth.auth().currentUser?.uid ?? "")
@@ -113,9 +130,38 @@ struct ExpandedThreadView: View {
             }
         }
     }
+    
+    func fetchUserData() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        FirebaseManager.shared.fetchUserData(userId: userId) { user in
+            guard let user = user else { return }
+            isLiked = user.likedThreads.contains(section.id ?? "")
+            isSaved = user.savedThreads.contains(section.id ?? "")
+        }
+    }
+    
+    func toggleLike() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        FirebaseManager.shared.toggleLikeThread(threadId: section.id ?? "", userId: userId, isLiked: isLiked) { success in
+            if success {
+                isLiked.toggle()
+            }
+        }
+    }
+    
+    func toggleSave() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        FirebaseManager.shared.toggleSaveThread(threadId: section.id ?? "", userId: userId, isSaved: isSaved) { success in
+            if success {
+                isSaved.toggle()
+            }
+        }
+    }
 }
 
 #Preview {
     ExpandedThreadView(section: sampleThreads[1])
         .environmentObject(AuthenticationManager())
 }
+
+
