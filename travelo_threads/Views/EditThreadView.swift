@@ -27,6 +27,8 @@ struct EditThreadView: View {
     @State private var isImageHidden: Bool = false
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var isLoading = false
+    @State private var showErrorBorder = false
     @Environment(\.presentationMode) var presentationMode
 
     var onSave: (Thread) -> Void
@@ -57,7 +59,7 @@ struct EditThreadView: View {
 
                 VStack(spacing: 20) {
                     TextField("Where did you go?", text: $title)
-                        .customTextField(image: Image("Icon Car"), backgroundColor: Color("CommentArea"), borderColor: Color("Green1"), cornerRadius: 20)
+                        .customTextField(image: Image("Icon Car"), backgroundColor: Color("CommentArea"), borderColor: showErrorBorder && title.trimmingCharacters(in: .whitespaces).isEmpty ? .red : Color("Green1"), cornerRadius: 20)
 
                     Button(action: {
                         isPresentingLocationSearch = true
@@ -65,7 +67,7 @@ struct EditThreadView: View {
                         HStack {
                             Image("Icon Location")
                             Text(locationName)
-                                .foregroundColor(.black)
+                                .foregroundColor(location == nil && showErrorBorder ? .red : .black)
                             Spacer()
                         }
                         .padding(8)
@@ -73,7 +75,7 @@ struct EditThreadView: View {
                         .cornerRadius(20)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color("Green1"), lineWidth: 1)
+                                .stroke(location == nil && showErrorBorder ? Color.red : Color("Green1"), lineWidth: 1)
                         )
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -83,6 +85,10 @@ struct EditThreadView: View {
 
                     CustomTextArea(text: $caption, placeholder: "Go ahead, tell us more!", height: 200)
                         .focused($isFocused)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 30)
+                                .stroke(showErrorBorder && caption.trimmingCharacters(in: .whitespaces).isEmpty ? Color.red : Color("Green1"), lineWidth: 1)
+                        )
 
                     Button(action: {
                         isPresentingActionSheet = true
@@ -160,6 +166,12 @@ struct EditThreadView: View {
                     }
                 })
             }
+            .blur(radius: isLoading ? 3 : 0)
+
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color("Green4")))
+            }
         }
         .onTapGesture {
             isFocused = false
@@ -186,13 +198,22 @@ struct EditThreadView: View {
     }
 
     func updateThread() {
+        if title.trimmingCharacters(in: .whitespaces).isEmpty || caption.trimmingCharacters(in: .whitespaces).isEmpty || location == nil {
+            alertMessage = "Please fill in all required fields."
+            showAlert = true
+            showErrorBorder = true
+            return
+        }
+
         var updatedThread = thread
         updatedThread.title = title
         updatedThread.caption = caption
         if let location = location {
             updatedThread.location = GeoPoint(latitude: location.latitude, longitude: location.longitude)
         }
+        isLoading = true
         FirebaseManager.shared.updateThread(thread: updatedThread, image: selectedImage) { success, message in
+            isLoading = false
             if success {
                 alertMessage = "Thread updated successfully"
                 showAlert = true
@@ -208,5 +229,6 @@ struct EditThreadView: View {
 #Preview {
     EditThreadView(thread: sampleThreads[0]) { _ in }
 }
+
 
 

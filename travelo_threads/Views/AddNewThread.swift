@@ -25,6 +25,8 @@ struct AddNewThreadView: View {
     @State private var isImageHidden: Bool = false
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var isLoading = false
+    @State private var showErrorBorder = false
     @Environment(\.presentationMode) var presentationMode
 
     var onAddThread: (Thread, UIImage?) -> Void
@@ -32,7 +34,7 @@ struct AddNewThreadView: View {
     var body: some View {
         ZStack {
             Color("Background").ignoresSafeArea()
-
+            
             VStack(alignment: .leading) {
                 HStack {
                     Text("Post a new thread")
@@ -48,7 +50,7 @@ struct AddNewThreadView: View {
 
                 VStack(spacing: 20) {
                     TextField("Where did you go?", text: $title)
-                        .customTextField(image: Image("Icon Car"), backgroundColor: Color("CommentArea"), borderColor: Color("Green1"), cornerRadius: 20)
+                        .customTextField(image: Image("Icon Car"), backgroundColor: Color("CommentArea"), borderColor: showErrorBorder && title.trimmingCharacters(in: .whitespaces).isEmpty ? .red : Color("Green1"), cornerRadius: 20)
 
                     Button(action: {
                         isPresentingLocationSearch = true
@@ -56,7 +58,7 @@ struct AddNewThreadView: View {
                         HStack {
                             Image("Icon Location")
                             Text(locationName)
-                                .foregroundColor(.black)
+                                .foregroundColor(location == nil && showErrorBorder ? .red : .black)
                             Spacer()
                         }
                         .padding(8)
@@ -64,7 +66,7 @@ struct AddNewThreadView: View {
                         .cornerRadius(20)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color("Green1"), lineWidth: 1)
+                                .stroke(location == nil && showErrorBorder ? Color.red : Color("Green1"), lineWidth: 1)
                         )
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -74,6 +76,10 @@ struct AddNewThreadView: View {
 
                     CustomTextArea(text: $caption, placeholder: "Go ahead, tell us more!", height: 200)
                         .focused($isFocused)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 30)
+                                .stroke(showErrorBorder && caption.trimmingCharacters(in: .whitespaces).isEmpty ? Color.red : Color("Green1"), lineWidth: 1)
+                        )
 
                     Button(action: {
                         isPresentingActionSheet = true
@@ -151,6 +157,12 @@ struct AddNewThreadView: View {
                     }
                 })
             }
+            .blur(radius: isLoading ? 3 : 0)
+
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color("Green4")))
+            }
         }
         .onTapGesture {
             isFocused = false
@@ -158,6 +170,13 @@ struct AddNewThreadView: View {
     }
 
     func addNewThread() {
+        if title.trimmingCharacters(in: .whitespaces).isEmpty || caption.trimmingCharacters(in: .whitespaces).isEmpty || location == nil {
+            alertMessage = "Please fill in all required fields."
+            showAlert = true
+            showErrorBorder = true
+            return
+        }
+
         guard let user = Auth.auth().currentUser else {
             alertMessage = "User not authenticated"
             showAlert = true
@@ -174,6 +193,7 @@ struct AddNewThreadView: View {
             createdBy: user.uid
         )
 
+        isLoading = true
         onAddThread(newThread, selectedImage)
     }
 }
@@ -181,4 +201,6 @@ struct AddNewThreadView: View {
 #Preview {
     AddNewThreadView { _, _ in }
 }
+
+
 
