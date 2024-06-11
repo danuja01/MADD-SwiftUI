@@ -42,6 +42,7 @@
 		AD4E51E12C184DA6006AA13A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E51E02C184DA6006AA13A /* User.swift */; };
 		AD4E51E72C18CDC9006AA13A /* ThreadsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E51E62C18CDC9006AA13A /* ThreadsViewModel.swift */; };
 		AD4E51E92C18DA05006AA13A /* ThreadActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E51E82C18DA05006AA13A /* ThreadActionViewModel.swift */; };
+		AD4E51EB2C18DDB5006AA13A /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E51EA2C18DDB5006AA13A /* CommentsViewModel.swift */; };
 		ADDF4D602C11E0C4000C9B1D /* travelo_threadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */; };
 		ADDF4D622C11E0C4000C9B1D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF4D612C11E0C4000C9B1D /* SignIn.swift */; };
 		ADDF4D642C11E0C6000C9B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADDF4D632C11E0C6000C9B1D /* Assets.xcassets */; };
@@ -98,6 +99,7 @@
 		AD4E51E02C184DA6006AA13A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AD4E51E62C18CDC9006AA13A /* ThreadsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsViewModel.swift; sourceTree = "<group>"; };
 		AD4E51E82C18DA05006AA13A /* ThreadActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadActionViewModel.swift; sourceTree = "<group>"; };
+		AD4E51EA2C18DDB5006AA13A /* CommentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		ADDF4D5C2C11E0C4000C9B1D /* travelo_threads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travelo_threads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADDF4D5F2C11E0C4000C9B1D /* travelo_threadsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = travelo_threadsApp.swift; sourceTree = "<group>"; };
 		ADDF4D612C11E0C4000C9B1D /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 			children = (
 				AD4E51E62C18CDC9006AA13A /* ThreadsViewModel.swift */,
 				AD4E51E82C18DA05006AA13A /* ThreadActionViewModel.swift */,
+				AD4E51EA2C18DDB5006AA13A /* CommentsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				ADDF4D912C1201E5000C9B1D /* TabBar.swift in Sources */,
 				AD28550F2C120C72002FF1B5 /* Extensions.swift in Sources */,
 				ADDFE7DC2C163428003BAC64 /* ImagePicker.swift in Sources */,
+				AD4E51EB2C18DDB5006AA13A /* CommentsViewModel.swift in Sources */,
 				ADDFE7F62C17338A003BAC64 /* ContentView_Previews.swift in Sources */,
 				ADDFE7C82C147BB5003BAC64 /* Comment.swift in Sources */,
 				AD4E51E92C18DA05006AA13A /* ThreadActionViewModel.swift in Sources */,

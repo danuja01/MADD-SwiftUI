@@ -15,7 +15,7 @@ struct ExpandedThreadView: View {
     @StateObject private var userImageLoader = ImageLoader()
     @StateObject private var sectionImageLoader = ImageLoader()
     @StateObject private var locationFetcher = LocationFetcher()
-    @State private var comments: [Comment] = []
+    @StateObject private var commentsViewModel: CommentsViewModel
     @StateObject private var threadActionsViewModel: ThreadActionsViewModel
 
     var section: Thread
@@ -25,6 +25,7 @@ struct ExpandedThreadView: View {
 
     init(section: Thread) {
         self.section = section
+        self._commentsViewModel = StateObject(wrappedValue: CommentsViewModel(threadId: section.id ?? ""))
         self._threadActionsViewModel = StateObject(wrappedValue: ThreadActionsViewModel(thread: section, userId: Auth.auth().currentUser?.uid ?? ""))
     }
 
@@ -73,9 +74,6 @@ struct ExpandedThreadView: View {
         }
         .background(Color("Background"))
         .statusBar(hidden: true)
-        .onAppear {
-            fetchComments()
-        }
         .onTapGesture {
             isFocused = false
         }
@@ -91,50 +89,25 @@ struct ExpandedThreadView: View {
                 .focused($isFocused)
             
             VStack(spacing: 10) {
-                ForEach(comments) { comment in
+                ForEach(commentsViewModel.comments) { comment in
                     CommentCard(section: comment, onDelete: {
-                        deleteComment(comment)
+                        commentsViewModel.deleteComment(comment)
                     }, currentUserId: Auth.auth().currentUser?.uid ?? "")
                 }
             }
         }
     }
     
-    func fetchComments() {
-        FirebaseManager.shared.fetchComments(threadId: section.id ?? "") { fetchedComments in
-            comments = fetchedComments.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() })
-        }
-    }
-
-    
     func addComment() {
         guard let user = Auth.auth().currentUser else { return }
-        let newComment = Comment(
+        commentsViewModel.addComment(
             text: commentText,
-            createdBy: user.uid,
             userName: authManager.userName ?? "Anonymous",
-            userImage: authManager.userImageURL ?? ""
+            userImage: authManager.userImageURL ?? "",
+            userId: user.uid
         )
-        
-        FirebaseManager.shared.addComment(threadId: section.id ?? "", comment: newComment) { success, error in
-            if success {
-                fetchComments()
-                commentText = ""
-                isFocused = false
-            } else {
-                print("Error adding comment: \(error ?? "Unknown error")")
-            }
-        }
-    }
-    
-    func deleteComment(_ comment: Comment) {
-        FirebaseManager.shared.deleteComment(threadId: section.id ?? "", commentId: comment.id ?? "") { success, error in
-            if success {
-                fetchComments()
-            } else {
-                print("Error deleting comment: \(error ?? "Unknown error")")
-            }
-        }
+        commentText = ""
+        isFocused = false
     }
 }
 
