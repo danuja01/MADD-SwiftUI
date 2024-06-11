@@ -22,6 +22,9 @@ struct HomeView: View {
                 content
             }
             .scrollIndicators(.never)
+            .refreshable {
+                threadsViewModel.fetchThreads()
+            }
             .onAppear {
                 threadsViewModel.fetchThreads()
             }
@@ -57,9 +60,11 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 20) {
             ForEach(threadsViewModel.threads) { thread in
                 ThreadCard(section: thread, onDelete: {
-                    threadsViewModel.deleteThread(thread) { success, message in
-                        if !success {
-                            // Handle error
+                    withAnimation {
+                        threadsViewModel.deleteThread(thread) { success, message in
+                            if !success {
+                                // Handle error
+                            }
                         }
                     }
                 }, onEdit: {
