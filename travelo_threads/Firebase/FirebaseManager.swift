@@ -235,18 +235,22 @@ class FirebaseManager {
      }
     
     func fetchComments(threadId: String, completion: @escaping ([Comment]) -> Void) {
-            db.collection("threads").document(threadId).collection("comments")
-                .order(by: "timestamp", descending: false)
-                .getDocuments { snapshot, error in
-                    if let error = error {
-                        print("Error fetching comments: \(error)")
-                        completion([])
-                    } else {
-                        let comments = snapshot?.documents.compactMap { try? $0.data(as: Comment.self) } ?? []
-                        completion(comments)
-                    }
-                }
+        let db = Firestore.firestore()
+        let commentsRef = db.collection("threads").document(threadId).collection("comments")
+
+        commentsRef.order(by: "timestamp", descending: true).getDocuments { snapshot, error in
+            guard let documents = snapshot?.documents else {
+                print("Error fetching comments: \(error?.localizedDescription ?? "Unknown error")")
+                completion([])
+                return
+            }
+            let comments = documents.compactMap { document -> Comment? in
+                try? document.data(as: Comment.self)
+            }
+            completion(comments)
         }
+    }
+
     
     func addComment(threadId: String, comment: Comment, completion: @escaping (Bool, String?) -> Void) {
             do {
