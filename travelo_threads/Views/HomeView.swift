@@ -38,8 +38,6 @@ struct HomeView: View {
                     threadsViewModel.addThread(newThread, image: image) { success, message in
                         if success {
                             isPresentingAddNewThread = false
-                        } else {
-                            // Handle error
                         }
                     }
                 }

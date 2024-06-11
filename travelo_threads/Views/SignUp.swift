@@ -22,6 +22,7 @@ struct SignUp: View {
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @State private var imageName: String?
     @State private var errorMessage: String? = nil
+    @State private var isLoading = false
 
     var body: some View {
         ZStack {
@@ -125,6 +126,7 @@ struct SignUp: View {
                     }
                     .largeButton()
                 }
+                .disabled(isLoading)
                 
                 HStack {
                     Rectangle().frame(height: 1).opacity(0.1)
@@ -153,21 +155,40 @@ struct SignUp: View {
                     .stroke(.linearGradient(colors: [.white.opacity(0.8), .white.opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing))
             )
             .padding()
+            .blur(radius: isLoading ? 3.0 : 0.0)
+
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(1.5, anchor: .center)
+            }
         }
     }
 
     func signUp() {
-        if !email.isValidEmail {
+        guard !username.trimmingCharacters(in: .whitespaces).isEmpty,
+              !email.trimmingCharacters(in: .whitespaces).isEmpty,
+              !password.trimmingCharacters(in: .whitespaces).isEmpty else {
+            errorMessage = "Please fill in all fields."
+            return
+        }
+        
+        guard selectedImage != nil else {
+            errorMessage = "Please upload a profile image."
+            return
+        }
+
+        if !email.trimmingCharacters(in: .whitespaces).isValidEmail {
             errorMessage = "Please enter a valid email address."
             return
         }
 
-        FirebaseManager.shared.createUser(email: email, password: password, username: username, image: selectedImage) { success, message in
+        isLoading = true
+        FirebaseManager.shared.createUser(email: email.trimmingCharacters(in: .whitespaces), password: password, username: username.trimmingCharacters(in: .whitespaces), image: selectedImage) { success, message in
+            isLoading = false
             if success {
-                // Handle successful registration, possibly dismiss view or show success message
                 presentationMode.wrappedValue.dismiss()
             } else {
-                // Handle error
                 errorMessage = message
             }
         }

@@ -14,10 +14,12 @@ struct SignIn: View {
     @State private var isPresentingSignUp = false
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var isLoading = false
 
     var body: some View {
         ZStack {
             Color("Background").ignoresSafeArea()
+            
             VStack(spacing: 24) {
                 VStack(spacing: 10) {
                     Text("Sign In")
@@ -49,6 +51,7 @@ struct SignIn: View {
                     }
                     .largeButton()
                 }
+                .disabled(isLoading)
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
@@ -80,6 +83,13 @@ struct SignIn: View {
                     .stroke(.linearGradient(colors: [.white.opacity(0.8), .white.opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing))
             )
             .padding()
+            .blur(radius: isLoading ? 3.0 : 0.0)
+
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(1.5, anchor: .center)
+            }
         }
         .fullScreenCover(isPresented: $isPresentingSignUp) {
             SignUp()
@@ -88,7 +98,16 @@ struct SignIn: View {
     }
 
     func logIn() {
-        authManager.signIn(email: email, password: password) { success, message in
+        guard !email.trimmingCharacters(in: .whitespaces).isEmpty,
+              !password.trimmingCharacters(in: .whitespaces).isEmpty else {
+            alertMessage = "Please fill in all fields."
+            showAlert = true
+            return
+        }
+        
+        isLoading = true
+        authManager.signIn(email: email.trimmingCharacters(in: .whitespaces), password: password) { success, message in
+            isLoading = false
             if !success {
                 alertMessage = message
                 showAlert = true
