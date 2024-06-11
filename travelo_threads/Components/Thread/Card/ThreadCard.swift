@@ -19,16 +19,18 @@ struct ThreadCard: View {
     var onDelete: () -> Void
     var onEdit: () -> Void
     var onTap: () -> Void
+    var onToggleSave: () -> Void
     var forceReload: Bool = false
 
-    init(section: Thread, onDelete: @escaping () -> Void, onEdit: @escaping () -> Void, onTap: @escaping () -> Void) {
+    init(section: Thread, onDelete: @escaping () -> Void, onEdit: @escaping () -> Void, onTap: @escaping () -> Void, onToggleSave: @escaping () -> Void) {
         self.section = section
         self.onDelete = onDelete
         self.onEdit = onEdit
         self.onTap = onTap
+        self.onToggleSave = onToggleSave
         self._threadActionsViewModel = StateObject(wrappedValue: ThreadActionsViewModel(thread: section, userId: Auth.auth().currentUser?.uid ?? ""))
     }
-    
+
     @EnvironmentObject var authManager: AuthenticationManager
 
     var body: some View {
@@ -57,6 +59,7 @@ struct ThreadCard: View {
                 },
                 onSave: {
                     threadActionsViewModel.toggleSave()
+                    onToggleSave() // Trigger the save toggle handler
                 },
                 color: .white,
                 favoriteCount: $threadActionsViewModel.favoriteCount
@@ -100,6 +103,6 @@ struct ThreadCard: View {
 }
 
 #Preview {
-    ThreadCard(section: sampleThreads[1], onDelete: {}, onEdit: {}, onTap: {})
+    ThreadCard(section: sampleThreads[1], onDelete: {}, onEdit: {}, onTap: {}, onToggleSave: {})
         .environmentObject(AuthenticationManager())
 }

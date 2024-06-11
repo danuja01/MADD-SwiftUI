@@ -19,9 +19,11 @@ struct ContentView: View {
                 authenticatedView
                     .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                     .environmentObject(threadsViewModel)
+                    .environmentObject(userAuth) // Ensure userAuth is passed as well
             } else {
                 SignIn()
                     .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing)))
+                    .environmentObject(userAuth) // Ensure userAuth is passed as well
             }
         }
         .animation(.default, value: userAuth.isAuthenticated)
@@ -37,7 +39,9 @@ struct ContentView: View {
                     .frame(maxHeight: .infinity)
                     .environmentObject(threadsViewModel)
             case .save:
-                Text("Save View")
+                SavedThreadView()
+                    .frame(maxHeight: .infinity)
+                    .environmentObject(threadsViewModel)
             case .user:
                 Text("User View")
             default:
@@ -65,3 +69,5 @@ struct ContentView: View {
     ContentView()
         .environmentObject(AuthenticationManager())
 }
+
+

@@ -15,7 +15,7 @@ import UIKit
 class FirebaseManager {
     static let shared = FirebaseManager()  // Singleton instance
     private init() {}
-
+    
     private let db = Firestore.firestore()
     
     func createUser(email: String, password: String, username: String, image: UIImage?, completion: @escaping (Bool, String) -> Void) {
@@ -172,25 +172,25 @@ class FirebaseManager {
     }
     
     func fetchThreads(completion: @escaping ([Thread]) -> Void) {
-           Firestore.firestore().collection("threads").order(by: "createdAt", descending: true).getDocuments(source: .server) { snapshot, error in
-               if let error = error {
-                   print("Error fetching threads: \(error)")
-                   completion([])
-                   return
-               }
-               
-               guard let documents = snapshot?.documents else {
-                   completion([])
-                   return
-               }
-               
-               let threads = documents.compactMap { document -> Thread? in
-                   try? document.data(as: Thread.self)
-               }
-               
-               completion(threads)
-           }
-       }
+        Firestore.firestore().collection("threads").order(by: "createdAt", descending: true).getDocuments(source: .server) { snapshot, error in
+            if let error = error {
+                print("Error fetching threads: \(error)")
+                completion([])
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                completion([])
+                return
+            }
+            
+            let threads = documents.compactMap { document -> Thread? in
+                try? document.data(as: Thread.self)
+            }
+            
+            completion(threads)
+        }
+    }
     
     func deleteThread(threadId: String, completion: @escaping (Bool, String?) -> Void) {
         Firestore.firestore().collection("threads").document(threadId).delete { error in
@@ -203,43 +203,43 @@ class FirebaseManager {
     }
     
     func updateThread(thread: Thread, image: UIImage?, completion: @escaping (Bool, String?) -> Void) {
-         guard let threadId = thread.id else {
-             completion(false, "Thread ID not found")
-             return
-         }
-         
-         var threadData: [String: Any]
-         do {
-             threadData = try Firestore.Encoder().encode(thread) as! [String: Any]
-         } catch {
-             completion(false, "Failed to encode thread data")
-             return
-         }
-         
-         if let image = image {
-             uploadUserProfileImage(image: image) { imageUrl in
-                 threadData["imageUrl"] = imageUrl
-                 self.saveUpdatedThreadData(threadId: threadId, threadData: threadData, completion: completion)
-             }
-         } else {
-             saveUpdatedThreadData(threadId: threadId, threadData: threadData, completion: completion)
-         }
-     }
-     
-     private func saveUpdatedThreadData(threadId: String, threadData: [String: Any], completion: @escaping (Bool, String?) -> Void) {
-         Firestore.firestore().collection("threads").document(threadId).updateData(threadData) { error in
-             if let error = error {
-                 completion(false, error.localizedDescription)
-             } else {
-                 completion(true, nil)
-             }
-         }
-     }
+        guard let threadId = thread.id else {
+            completion(false, "Thread ID not found")
+            return
+        }
+        
+        var threadData: [String: Any]
+        do {
+            threadData = try Firestore.Encoder().encode(thread) as! [String: Any]
+        } catch {
+            completion(false, "Failed to encode thread data")
+            return
+        }
+        
+        if let image = image {
+            uploadUserProfileImage(image: image) { imageUrl in
+                threadData["imageUrl"] = imageUrl
+                self.saveUpdatedThreadData(threadId: threadId, threadData: threadData, completion: completion)
+            }
+        } else {
+            saveUpdatedThreadData(threadId: threadId, threadData: threadData, completion: completion)
+        }
+    }
+    
+    private func saveUpdatedThreadData(threadId: String, threadData: [String: Any], completion: @escaping (Bool, String?) -> Void) {
+        Firestore.firestore().collection("threads").document(threadId).updateData(threadData) { error in
+            if let error = error {
+                completion(false, error.localizedDescription)
+            } else {
+                completion(true, nil)
+            }
+        }
+    }
     
     func fetchComments(threadId: String, completion: @escaping ([Comment]) -> Void) {
         let db = Firestore.firestore()
         let commentsRef = db.collection("threads").document(threadId).collection("comments")
-
+        
         commentsRef.order(by: "timestamp", descending: true).getDocuments { snapshot, error in
             guard let documents = snapshot?.documents else {
                 print("Error fetching comments: \(error?.localizedDescription ?? "Unknown error")")
@@ -252,38 +252,38 @@ class FirebaseManager {
             completion(comments)
         }
     }
-
+    
     
     func addComment(threadId: String, comment: Comment, completion: @escaping (Bool, String?) -> Void) {
-            do {
-                _ = try db.collection("threads").document(threadId).collection("comments").addDocument(from: comment)
-                completion(true, nil)
-            } catch {
-                completion(false, "Failed to add comment: \(error.localizedDescription)")
-            }
+        do {
+            _ = try db.collection("threads").document(threadId).collection("comments").addDocument(from: comment)
+            completion(true, nil)
+        } catch {
+            completion(false, "Failed to add comment: \(error.localizedDescription)")
         }
+    }
     
     func deleteComment(threadId: String, commentId: String, completion: @escaping (Bool, String?) -> Void) {
-            db.collection("threads").document(threadId).collection("comments").document(commentId).delete { error in
-                if let error = error {
-                    completion(false, "Failed to delete comment: \(error.localizedDescription)")
-                } else {
-                    completion(true, nil)
-                }
+        db.collection("threads").document(threadId).collection("comments").document(commentId).delete { error in
+            if let error = error {
+                completion(false, "Failed to delete comment: \(error.localizedDescription)")
+            } else {
+                completion(true, nil)
             }
         }
+    }
     
     func fetchUserData(userId: String, completion: @escaping (User?) -> Void) {
-            db.collection("users").document(userId).getDocument { document, error in
-                if let document = document, document.exists {
-                    let user = try? document.data(as: User.self)
-                    completion(user)
-                } else {
-                    completion(nil)
-                }
+        db.collection("users").document(userId).getDocument { document, error in
+            if let document = document, document.exists {
+                let user = try? document.data(as: User.self)
+                completion(user)
+            } else {
+                completion(nil)
             }
         }
-        
+    }
+    
     func toggleLikeThread(threadId: String, userId: String, isLiked: Bool, completion: @escaping (Bool) -> Void) {
         let db = Firestore.firestore()
         let threadRef = db.collection("threads").document(threadId)
@@ -331,7 +331,7 @@ class FirebaseManager {
             }
         }
     }
-
+    
     func toggleSaveThread(threadId: String, userId: String, isSaved: Bool, completion: @escaping (Bool) -> Void) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(userId)
@@ -346,7 +346,31 @@ class FirebaseManager {
             }
         }
     }
-
     
-    
+    func fetchSavedThreads(userId: String, completion: @escaping ([Thread]) -> Void) {
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userId)
+        
+        userRef.getDocument { document, error in
+            if let document = document, document.exists {
+                if let savedThreadIds = document.data()?["savedThreads"] as? [String] {
+                    let threadsRef = db.collection("threads")
+                    threadsRef.whereField(FieldPath.documentID(), in: savedThreadIds).getDocuments { snapshot, error in
+                        guard let documents = snapshot?.documents else {
+                            print("Error fetching saved threads: \(error?.localizedDescription ?? "Unknown error")")
+                            completion([])
+                            return
+                        }
+                        let threads = documents.compactMap { try? $0.data(as: Thread.self) }
+                        completion(threads)
+                    }
+                } else {
+                    completion([])
+                }
+            } else {
+                print("Error fetching user document: \(error?.localizedDescription ?? "Unknown error")")
+                completion([])
+            }
+        }
+    }
 }

@@ -71,6 +71,12 @@ struct HomeView: View {
                     threadToEdit = thread
                 }, onTap: {
                     selectedThread = thread
+                }, onToggleSave: {
+                    threadsViewModel.toggleSaveThread(thread, isSaved: false) { success in
+                        if success {
+                            threadsViewModel.fetchThreads()
+                        }
+                    }
                 })
                 .buttonStyle(PlainButtonStyle())
                 .onLongPressGesture {
