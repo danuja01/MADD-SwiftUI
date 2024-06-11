@@ -14,6 +14,8 @@ struct CommentCard: View {
     var userImageSize: CGFloat = 35
     var onDelete: (() -> Void)? = nil
     var currentUserId: String
+    
+    @State private var showAlert = false
 
     var body: some View {
         VStack {
@@ -28,13 +30,27 @@ struct CommentCard: View {
                 }
                 Spacer()
                 
-                // Only show the delete button if the current user created the comment
                 if section.createdBy == currentUserId, let onDelete = onDelete {
-                    Button(action: onDelete) {
+                    Button(action: {
+                        showAlert = true
+                    }) {
                         Image(systemName: "trash")
-                            .foregroundColor(.red)
+                            .foregroundColor(Color(hex:"#FFF7F1"))
+                            .fontWeight(.semibold)
+                            .font(.system(size: 18))
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Delete Comment"),
+                            message: Text("Are you sure you want to delete this comment?"),
+                            primaryButton: .destructive(Text("Delete")) {
+                                onDelete()
+                            },
+                            secondaryButton: .cancel()
+                        )
                     }
                 }
+                
             }
             .padding()
         }
@@ -46,6 +62,6 @@ struct CommentCard: View {
 }
 
 #Preview {
-    CommentCard(section: sampleComments[2], onDelete: nil, currentUserId: "currentUserId")
+    CommentCard(section: sampleComments[0], onDelete: nil, currentUserId: "currentUserId")
         .padding()
 }

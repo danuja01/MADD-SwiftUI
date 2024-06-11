@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct CommentTextArea: View {
-    @Binding var comment:String
+    @Binding var comment: String
     @FocusState private var isFocused: Bool
-    
+    var onCommit: () -> Void
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             Color("CommentArea")
@@ -19,7 +20,7 @@ struct CommentTextArea: View {
                     RoundedRectangle(cornerRadius: 30)
                         .stroke(Color("Green1"), lineWidth: 2)
                 )
-            
+
             TextEditor(text: $comment)
                 .focused($isFocused)
                 .lineSpacing(10.0)
@@ -27,7 +28,10 @@ struct CommentTextArea: View {
                 .background(Color("CommentArea"))
                 .padding()
                 .autocorrectionDisabled()
-            
+                .onSubmit {
+                    onCommit()
+                }
+
             if comment.isEmpty && !isFocused {
                 HStack {
                     Image("Icon Comment")
@@ -36,14 +40,33 @@ struct CommentTextArea: View {
                         .fontWeight(.bold)
                 }
                 .padding()
+            } else {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Circle()
+                            .fill(Color.gray.opacity(0.3))  // Opacity background
+                            .frame(width: 40, height: 40)
+                            .overlay(
+                                Button(action: {
+                                    onCommit()
+                                }) {
+                                    Image(systemName: "paperplane.fill")
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                }
+                            )
+                            .padding()
+                    }
+                }
             }
         }
         .frame(height: 120)
     }
 }
 
-
 #Preview {
-    CommentTextArea(comment: Binding.constant(""))
+    CommentTextArea(comment: Binding.constant(""), onCommit: {})
         .padding()
 }

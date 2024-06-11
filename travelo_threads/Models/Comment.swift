@@ -26,8 +26,4 @@ struct Comment: Identifiable, Codable {
 }
 
 
-var sampleComments: [Comment] = [
-
-]
-
 

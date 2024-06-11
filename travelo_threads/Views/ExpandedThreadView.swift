@@ -65,18 +65,8 @@ struct ExpandedThreadView: View {
                 .frame(height: 1)
                 .foregroundColor(Color("Green2"))
             
-            HStack {
-                CommentTextArea(comment: $commentText)
-                    .focused($isFocused)
-                
-                Button(action: addComment) {
-                    Text("Post")
-                        .padding()
-                        .background(Color("Green4"))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            }
+            CommentTextArea(comment: $commentText, onCommit: addComment)
+                .focused($isFocused)
             
             VStack(spacing: 10) {
                 ForEach(comments) { comment in
@@ -129,4 +119,3 @@ struct ExpandedThreadView: View {
     ExpandedThreadView(section: sampleThreads[1])
         .environmentObject(AuthenticationManager())
 }
-
