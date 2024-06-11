@@ -16,15 +16,18 @@ struct ExpandedThreadView: View {
     @StateObject private var sectionImageLoader = ImageLoader()
     @StateObject private var locationFetcher = LocationFetcher()
     @State private var comments: [Comment] = []
-    @State private var favoriteCount: Int = 0
+    @StateObject private var threadActionsViewModel: ThreadActionsViewModel
 
     var section: Thread
     
     @EnvironmentObject var authManager: AuthenticationManager
     @Environment(\.presentationMode) var presentationMode
-    @State private var isLiked: Bool = false
-    @State private var isSaved: Bool = false
-    
+
+    init(section: Thread) {
+        self.section = section
+        self._threadActionsViewModel = StateObject(wrappedValue: ThreadActionsViewModel(thread: section, userId: Auth.auth().currentUser?.uid ?? ""))
+    }
+
     var body: some View {
         VStack {
             CloseButton(action: {
@@ -50,16 +53,16 @@ struct ExpandedThreadView: View {
                     CardButtons(
                         threadId: section.id ?? "",
                         userId: Auth.auth().currentUser?.uid ?? "",
-                        isLiked: isLiked,
-                        isSaved: isSaved,
+                        isLiked: threadActionsViewModel.isLiked,
+                        isSaved: threadActionsViewModel.isSaved,
                         onLike: {
-                            toggleLike()
+                            threadActionsViewModel.toggleLike()
                         },
                         onSave: {
-                            toggleSave()
+                            threadActionsViewModel.toggleSave()
                         },
                         color: Color("Button"),
-                        favoriteCount: $favoriteCount
+                        favoriteCount: $threadActionsViewModel.favoriteCount
                     )
                     .environmentObject(authManager)
                     .padding(.top, 0),
@@ -72,8 +75,6 @@ struct ExpandedThreadView: View {
         .statusBar(hidden: true)
         .onAppear {
             fetchComments()
-            fetchUserData()
-            fetchFavoriteCount()
         }
         .onTapGesture {
             isFocused = false
@@ -90,7 +91,7 @@ struct ExpandedThreadView: View {
                 .focused($isFocused)
             
             VStack(spacing: 10) {
-                ForEach(comments.reversed()) { comment in
+                ForEach(comments) { comment in
                     CommentCard(section: comment, onDelete: {
                         deleteComment(comment)
                     }, currentUserId: Auth.auth().currentUser?.uid ?? "")
@@ -101,9 +102,10 @@ struct ExpandedThreadView: View {
     
     func fetchComments() {
         FirebaseManager.shared.fetchComments(threadId: section.id ?? "") { fetchedComments in
-            comments = fetchedComments
+            comments = fetchedComments.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() })
         }
     }
+
     
     func addComment() {
         guard let user = Auth.auth().currentUser else { return }
@@ -131,49 +133,6 @@ struct ExpandedThreadView: View {
                 fetchComments()
             } else {
                 print("Error deleting comment: \(error ?? "Unknown error")")
-            }
-        }
-    }
-    
-    func fetchUserData() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        FirebaseManager.shared.fetchUserData(userId: userId) { user in
-            guard let user = user else { return }
-            isLiked = user.likedThreads.contains(section.id ?? "")
-            isSaved = user.savedThreads.contains(section.id ?? "")
-        }
-    }
-    
-    func toggleLike() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        FirebaseManager.shared.toggleLikeThread(threadId: section.id ?? "", userId: userId, isLiked: isLiked) { success in
-            if success {
-                isLiked.toggle()
-                favoriteCount += isLiked ? 1 : -1
-            }
-        }
-    }
-    
-    func toggleSave() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        FirebaseManager.shared.toggleSaveThread(threadId: section.id ?? "", userId: userId, isSaved: isSaved) { success in
-            if success {
-                isSaved.toggle()
-            }
-        }
-    }
-
-    func fetchFavoriteCount() {
-        let db = Firestore.firestore()
-        let threadRef = db.collection("threads").document(section.id ?? "")
-
-        threadRef.getDocument { document, error in
-            if let document = document, document.exists {
-                if let count = document.data()?["favoriteCount"] as? Int {
-                    favoriteCount = count
-                }
-            } else {
-                print("Document does not exist")
             }
         }
     }

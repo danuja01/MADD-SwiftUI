@@ -41,6 +41,7 @@ struct SignUp: View {
                         .foregroundColor(.secondary)
                     TextField("", text: $username)
                         .customTextField(image: Image("Icon Username"))
+                        .autocorrectionDisabled()
                 }
                 
                 VStack(alignment: .leading) {

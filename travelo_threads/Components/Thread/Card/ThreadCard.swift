@@ -13,15 +13,21 @@ struct ThreadCard: View {
     @StateObject private var userImageLoader = ImageLoader()
     @StateObject private var sectionImageLoader = ImageLoader()
     @StateObject private var locationFetcher = LocationFetcher()
-    
+    @StateObject private var threadActionsViewModel: ThreadActionsViewModel
+
     var section: Thread
     var onDelete: () -> Void
     var onEdit: () -> Void
     var onTap: () -> Void
     var forceReload: Bool = false
-    @State private var isLiked: Bool = false
-    @State private var isSaved: Bool = false
-    @State private var favoriteCount: Int = 0
+
+    init(section: Thread, onDelete: @escaping () -> Void, onEdit: @escaping () -> Void, onTap: @escaping () -> Void) {
+        self.section = section
+        self.onDelete = onDelete
+        self.onEdit = onEdit
+        self.onTap = onTap
+        self._threadActionsViewModel = StateObject(wrappedValue: ThreadActionsViewModel(thread: section, userId: Auth.auth().currentUser?.uid ?? ""))
+    }
     
     @EnvironmentObject var authManager: AuthenticationManager
 
@@ -44,16 +50,16 @@ struct ThreadCard: View {
             CardButtons(
                 threadId: section.id ?? "",
                 userId: Auth.auth().currentUser?.uid ?? "",
-                isLiked: isLiked,
-                isSaved: isSaved,
+                isLiked: threadActionsViewModel.isLiked,
+                isSaved: threadActionsViewModel.isSaved,
                 onLike: {
-                    toggleLike()
+                    threadActionsViewModel.toggleLike()
                 },
                 onSave: {
-                    toggleSave()
+                    threadActionsViewModel.toggleSave()
                 },
                 color: .white,
-                favoriteCount: $favoriteCount
+                favoriteCount: $threadActionsViewModel.favoriteCount
             )
             .environmentObject(authManager)
             .padding(.top, 0),
@@ -87,51 +93,8 @@ struct ThreadCard: View {
             if let location = section.location {
                 locationFetcher.fetchLocation(for: location.toCLLocationCoordinate2D(), forceReload: forceReload)
             }
-            fetchUserData()
-            fetchFavoriteCount()
-        }
-    }
-    
-    func fetchUserData() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        FirebaseManager.shared.fetchUserData(userId: userId) { user in
-            guard let user = user else { return }
-            isLiked = user.likedThreads.contains(section.id ?? "")
-            isSaved = user.savedThreads.contains(section.id ?? "")
-        }
-    }
-    
-    func toggleLike() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        FirebaseManager.shared.toggleLikeThread(threadId: section.id ?? "", userId: userId, isLiked: isLiked) { success in
-            if success {
-                isLiked.toggle()
-                favoriteCount += isLiked ? 1 : -1
-            }
-        }
-    }
-    
-    func toggleSave() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        FirebaseManager.shared.toggleSaveThread(threadId: section.id ?? "", userId: userId, isSaved: isSaved) { success in
-            if success {
-                isSaved.toggle()
-            }
-        }
-    }
-
-    func fetchFavoriteCount() {
-        let db = Firestore.firestore()
-        let threadRef = db.collection("threads").document(section.id ?? "")
-
-        threadRef.getDocument { document, error in
-            if let document = document, document.exists {
-                if let count = document.data()?["favoriteCount"] as? Int {
-                    favoriteCount = count
-                }
-            } else {
-                print("Document does not exist")
-            }
+            threadActionsViewModel.fetchUserData()
+            threadActionsViewModel.fetchFavoriteCount()
         }
     }
 }
