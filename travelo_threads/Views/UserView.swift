@@ -12,6 +12,7 @@ struct UserView: View {
     @EnvironmentObject var threadsViewModel: ThreadsViewModel
     @State private var myThreads: [Thread] = []
     @StateObject private var userImageLoader = ImageLoader()
+    @State private var selectedThread: Thread?
 
     var body: some View {
         ScrollView {
@@ -72,7 +73,7 @@ struct UserView: View {
                                 // Handle edit
                             },
                             onTap: {
-                                // Handle tap
+                                selectedThread = thread
                             },
                             onToggleSave: {
                                 // Handle save toggle
@@ -87,9 +88,9 @@ struct UserView: View {
         }
         .onAppear {
             fetchMyThreads()
-            if let imageUrl = authManager.userImageURL, let url = URL(string: imageUrl) {
-                userImageLoader.load(url: url)
-            }
+        }
+        .fullScreenCover(item: $selectedThread) { thread in
+            ExpandedThreadView(section: thread)
         }
     }
     
@@ -98,5 +99,11 @@ struct UserView: View {
         let allThreads = threadsViewModel.threads
         myThreads = allThreads.filter { $0.createdBy == userId }
     }
+}
+
+#Preview {
+    UserView()
+        .environmentObject(AuthenticationManager())
+        .environmentObject(ThreadsViewModel())
 }
 

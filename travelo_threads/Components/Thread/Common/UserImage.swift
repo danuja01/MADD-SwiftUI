@@ -26,6 +26,7 @@ struct UserImage: View {
         } else {
             Circle()
                 .frame(width: size, height: size)
+                .foregroundColor(Color("Placeholder"))
                 .animatePlaceholder()
                 .shadow(color: Color("Shadow").opacity(0.1), radius: 10, x: 0, y: 0)
                 .onAppear {
