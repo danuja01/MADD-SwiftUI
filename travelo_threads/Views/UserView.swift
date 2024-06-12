@@ -13,6 +13,7 @@ struct UserView: View {
     @State private var myThreads: [Thread] = []
     @StateObject private var userImageLoader = ImageLoader()
     @State private var selectedThread: Thread?
+    @State private var showAlert = false
 
     var body: some View {
         ScrollView {
@@ -31,7 +32,7 @@ struct UserView: View {
                 }.padding(.bottom, 20)
                 
                 Button(action: {
-                    authManager.signOut()
+                    showAlert = true
                 }) {
                     HStack {
                         Spacer()
@@ -91,6 +92,16 @@ struct UserView: View {
         }
         .fullScreenCover(item: $selectedThread) { thread in
             ExpandedThreadView(section: thread)
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Confirm Logout"),
+                message: Text("Are you sure you want to log out?"),
+                primaryButton: .destructive(Text("Log Out")) {
+                    authManager.signOut()
+                },
+                secondaryButton: .cancel()
+            )
         }
     }
     
