@@ -18,7 +18,7 @@ struct UserImage: View {
                 .overlay(
                     Image(uiImage: image)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .aspectRatio(contentMode: .fill)
                         .scaledToFill()
                         .clipShape(Circle())
                 )
@@ -26,7 +26,7 @@ struct UserImage: View {
         } else {
             Circle()
                 .frame(width: size, height: size)
-                .overlay(AnimatedCirclePlaceholder())
+                .animatePlaceholder()
                 .shadow(color: Color("Shadow").opacity(0.1), radius: 10, x: 0, y: 0)
                 .onAppear {
                     if let url = URL(string: imageUrl) {

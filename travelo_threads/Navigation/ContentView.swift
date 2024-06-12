@@ -43,7 +43,9 @@ struct ContentView: View {
                     .frame(maxHeight: .infinity)
                     .environmentObject(threadsViewModel)
             case .user:
-                Text("User View")
+                UserView()
+                    .frame(maxHeight: .infinity)
+                    .environmentObject(threadsViewModel)
             default:
                 EmptyView()
             }

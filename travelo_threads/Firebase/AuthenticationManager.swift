@@ -23,6 +23,10 @@ class AuthenticationManager: ObservableObject {
             print("userImageURL updated to: \(userImageURL ?? "nil")")
         }
     }
+    @Published var userEmail: String? = nil
+    var currentUserId: String? {
+        Auth.auth().currentUser?.uid
+    }
 
     func signIn(email: String, password: String, completion: @escaping (Bool, String) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
@@ -32,12 +36,11 @@ class AuthenticationManager: ObservableObject {
                 return
             }
 
-            // Set isAuthenticated to true on successful login
             DispatchQueue.main.async {
                 self.isAuthenticated = true
+                self.userEmail = email
             }
             
-            // Assuming user ID is available in authResult
             if let userID = authResult?.user.uid {
                 self.fetchUserDetails(userId: userID)
             }
@@ -68,6 +71,7 @@ class AuthenticationManager: ObservableObject {
             isAuthenticated = false
             userName = nil
             userImageURL = nil
+            userEmail = nil
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }

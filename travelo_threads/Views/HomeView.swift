@@ -63,7 +63,7 @@ struct HomeView: View {
                     withAnimation {
                         threadsViewModel.deleteThread(thread) { success, message in
                             if !success {
-                                // Handle error
+                               
                             }
                         }
                     }
@@ -82,8 +82,6 @@ struct HomeView: View {
                 .onLongPressGesture {
                     if thread.createdBy == Auth.auth().currentUser?.uid {
                         threadToEdit = thread
-                    } else {
-                        // Handle other actions for threads not created by the current user
                     }
                 }
             }
